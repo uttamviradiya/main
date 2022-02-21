@@ -25,12 +25,14 @@
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c{border:1px solid var(--default);background:var(--default2);color:var(--default3);min-width:100%;margin:0;width:100%;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c:hover{background:var(--default3);color:var(--default2);}
     
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;}
+    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;display:none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block.show{display:block;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close{border:none;background:none;outline:none;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close svg{width:12px;height:12px;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close-block{text-align:end;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list{display: flex;flex-wrap: wrap;justify-content: center;padding:10px 0;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list a{width:fit-content;margin:0 10px;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.selected{border-bottom:1px solid var(--default3);}
     
     .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
     .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
@@ -116,15 +118,15 @@
                         <div class="variant-list">
                           {%- for option in product.options_with_values -%}
   
-                          {% if option.name == 'Size' %}
+                         
                           {% for value in option.values %}
                          
-                          <a class href="javascript:void(0)">
+                          <a class="size-var {% if forloop.first %} selected {% endif %}  {% if option.available == false %}disabled{% endif %}" href="javascript:void(0)">
                             {{ value }}
                           </a>
                          
                           {% endfor %}
-                          {% endif %}
+                        
                           {% endfor %}
   
                           
@@ -144,7 +146,7 @@
                     
                   <div class="pro-quick-view">
                     <a href="javascript:void(0)" title="Quick View">
-                      {% render 'icon-eye' %}
+                      {% render 'eye-icon' %}
                     </a>
                   </div>
                   </div>
@@ -186,6 +188,34 @@
                         
                   {% endif %}
                     {%- endfor -%}
+                  
+                   
+                  {% comment %}
+                  <select name="id" id="Variants-{{ section.id }}" class="select__select" >
+                    {%- for variant in product.variants -%}
+                      <option
+                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                        {% if variant.available == false %}disabled{% endif %}
+                        value="{{ variant.id }}"
+                      >
+                        {{ variant.title }}
+                        {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                        - {{ variant.price | money | strip_html }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                  {% form 'product' , product %}
+                 <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
+                  <input type="hidden" name="quantity" value="1">
+                  <input type='submit'>
+                  {% endform %}
+                  
+                  {% endcomment %}
+                  <form  method="post" class="product-form" id="add-to-cart">
+                    <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
+                  <input type="hidden" class="q" name="quantity" value="5">
+                  <input type="button" name="add" value="Purchase" class="btn btn--purchase" onclick="a('add-to-cart')">
+                  </form>
                 </div>
               </div>
             </li>
@@ -251,38 +281,84 @@
     </div>
   </section>
   
-  <script>
-    $(document).ready(function(){ 
-      $(".tab-menu-list .tab-a").first().addClass("active-a");
-      $(".section-tab-menu .tab").first().addClass("tab-active");
-      $('.tab-menu-list .tab-a').click(function(){  
-  
-        $(".section-tab-menu .tab").removeClass('tab-active');
-  
-        $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
-  
-        $(".tab-menu-list .tab-a").removeClass('active-a');
-  
-        $(this).addClass('active-a');
-      });
-  
-  //     $(".pro-block-slider").slick({
-  //       infinite: true,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 1
-  //     });
-  
-      $(".pro-variant label").first().addClass("active");
-      $(".pro-variant label").click(function(){
-          $(".pro-variant label").removeClass("active");
-        $(this).addClass("active");
-        var id = $(this).attr("for");
-        var color = $("#"+id).attr("value");
-        $("#color").html(color);
-      });
-      
-      
+<script>
+  $(document).ready(function(){ 
+    $(".tab-menu-list .tab-a").first().addClass("active-a");
+    $(".section-tab-menu .tab").first().addClass("tab-active");
+    $('.tab-menu-list .tab-a').click(function(){  
+
+      $(".section-tab-menu .tab").removeClass('tab-active');
+
+      $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
+
+      $(".tab-menu-list .tab-a").removeClass('active-a');
+
+      $(this).addClass('active-a');
     });
+
+    //     $(".pro-block-slider").slick({
+    //       infinite: true,
+    //   slidesToShow: 4,
+    //   slidesToScroll: 1
+    //     });
+
+
+    //add to cart open
+    $(".pro-img-block .pro-a2c").click(function(){
+
+      $(this).hide();
+      $(this).parent().children(".pro-variant-block").addClass("show");
+    });
+
+    $(".pro-variant-block .close").click(function(){
+      $(this).parents(".pro-variant-block").removeClass("show");
+      $(this).parents("figcaption").children(".pro-a2c").show();
+    });
+
+    $(".pro-variant label").first().addClass("active");
+    $(".pro-variant label").click(function(){
+      $(".pro-variant label").removeClass("active");
+      $(this).addClass("active");
+      var id = $(this).attr("for");
+      var color = $("#"+id).attr("value");
+      $("#color").html(color);
+    });
+
+    $(".select__select").change(function(){
+      var a = $(".select__select :selected").attr("value");
+      alert(a);
+      $(".var").attr("value",a);
+    });
+  });
+
+
+    //ajax
+
+function a(form_id) {
+
+  alert($('#'+form_id).serialize());
+   $.ajax({
+      type: 'POST', 
+      url: '/cart/add.js',
+      dataType: 'json', 
+      data: $('#'+form_id).serialize(),
+      success: addToCartOk,
+      error: addToCartFail
+    });
+}
+
+function addToCartOk(product) { 
+   alert("ok");
+} 
+
+function addToCartFail(obj, status) { 
+    alert()
+ } 
+
+
+ 
+
+
   </script>
   
   
