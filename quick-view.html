@@ -1,0 +1,93 @@
+<style>
+    /*   .quick-view-main{display:none;} */
+    /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1 !important;visibility:visible !important;} */
+      .quick-view-main{display:none;position: fixed;top:0;left:0;width:100%;height:100%;z-index:1111;align-items: center;justify-content: center;cursor: auto;}
+      .quick-view-main .quick-view-main-wrapper{position:absolute;top:0;width:100%;height:100%;background:#0000007a;z-index:111;}
+      .quick-view-main .quick-view-container{background: white;width:75%;height:85%;z-index:11111;position:relative;}
+      
+      .quick-view-main .qv-btn-close{position: absolute;top: -15px;right: -15px;border: none;background: var(--default3);color: var(--default2);padding:10px;line-height:0;}
+      .quick-view-main .qv-btn-close svg{width:10px;height:10px;fill:var(--default2);}
+      
+      .quick-view-main .quick-view-main-block{width:100%;height:100%;overflow:auto;padding:50px;}
+      
+      .qv-arrow{position: absolute;top: 50%;border: none;background: none;font-size: 20px;z-index:1111;transform:translateY(-50%);outline:0 !important}
+      .qv-arrow.qv-prev{left:-25px;}
+      .qv-arrow.qv-next{right:-25px;}
+      .quick-view-main .quick-view-container .product-media-single .product-media-slider-single figure{max-height:520px;height:100%;}
+      .quick-view-main .quick-view-container .product-media-multi .product-media-slider-multi figure{height:100px;margin:5px;}
+      .quick-view-main .quick-view-container .product-media-single{margin-bottom:20px;}
+    
+    </style>
+    
+    <div class="quick-view-main">
+      <div class="quick-view-main-wrapper">
+      </div>
+      <div class="quick-view-container">
+        <button class="qv-btn-close">
+          {% render 'close-icon' %}
+        </button>
+        <div class="quick-view-main-block">
+          <div class="row">
+            <div class="col-5">
+              <div class="product-media-single">
+                <div class="product-media-slider-single">
+                
+                  {% for image in product.images %}
+                  <figure>
+                    <img src="{{ image | img_url:"master" }}">
+                  </figure>
+                  {% endfor %}
+                </div>
+                </div>
+              <div class="product-media-multi">
+                
+               
+                <div class="product-media-slider-multi">
+                  
+                  {% for image in product.images %}
+                  <figure>
+                    <img src="{{ image | img_url:"master" }}">
+                  </figure>
+                  {% endfor %}
+    
+                </div>
+               
+              </div>
+          </div>
+            <div class="col-7">
+              pro desc
+              {{ product.title }}
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      
+      $(document).ready(function(){
+        $('.product-media-slider-single').slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          fade: true,
+          asNavFor: '.product-media-slider-multi',
+          prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+          nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+    
+    
+        });
+        $('.product-media-slider-multi').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          arrows: true,
+          asNavFor: '.product-media-slider-single',
+          prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+          nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+    
+    
+        });
+        
+      });
+      
+    </script>

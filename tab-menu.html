@@ -1,479 +1,532 @@
 <style>
 
-    .section-tab-menu .tab{display: none;}
-    .section-tab-menu .tab-active{display: block;}
-    /*   .active-ans{display:block !important;} */
-    .section-tab-menu .tab-menu-list .active-a{color:white !important;background:var(--default3);transition:0.3s;}
-    .section-tab-menu{padding:35px 0;}
-    .section-tab-menu .page-width{max-width: 1030px;margin: 0 auto;padding: 0 15px;}
-    .section-tab-menu .tab-head{margin:0;text-align:center;margin-bottom: 15px;}
-    .section-tab-menu .tab-menu-list{margin-bottom:25px;}
-    .section-tab-menu .tab-menu-list ul{display:flex;margin:0;justify-content:center;padding:0;flex-wrap:wrap;}
-    .section-tab-menu li{list-style-type: none;}
-    .section-tab-menu .tab-menu-list ul li {padding: 7px 20px;margin: 0 10px;border-radius: 5px;font-weight: 700;text-transform:uppercase;cursor: pointer;margin-bottom:15px;}
-    .section-tab-menu .pro-block ul{padding:0;margin:0;display:flex;}
-    .section-tab-menu .pro-block ul li{margin:15px 0;}
-    .section-tab-menu .pro-block p{margin:0;}
-    
-       .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure figcaption{opacity:1;visibility:visible;}
-    .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1;visibility:visible;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure{height:305px;position:relative;}
-  /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure:hover figcaption{opacity:1;} */
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure a{width:100%;height:100%;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure img{object-position:top;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption{position:absolute;bottom:0;width:100%;transition:0.3s;background:var(--default2);padding-bottom:15px; opacity:1;visibility:visible;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c{border:1px solid var(--default);background:var(--default2);color:var(--default3);min-width:100%;margin:0;width:100%;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c:hover{background:var(--default3);color:var(--default2);}
-    
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;display:none;}
-  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block.show{display:block;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close{border:none;background:none;outline:none;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close svg{width:12px;height:12px;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close-block{text-align:end;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list{display: flex;flex-wrap: wrap;justify-content: center;padding:10px 0;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list a{width:fit-content;margin:0 10px;}
-  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.selected{border-bottom:1px solid var(--default3);}
-    
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{visibility:hidden;opacity:0;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a {text-align:center;width:30px;height:30px;border:1px solid grey;border-radius:50%;}
-    .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a svg{width:15px;}
-    
-    .section-tab-menu .pro-block .pro-li .pro-info-block{display: flex;flex-direction: column;align-items: center;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-vendor{color:#969696}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-title{text-align:center;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .compare{color:#969696;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .original.comapre-avail{color:var(--primary)}
+  .section-tab-menu .tab{display: none;}
+  .section-tab-menu .tab-active{display: block;}
+  /*   .active-ans{display:block !important;} */
+  .section-tab-menu .tab-menu-list .active-a{color:white !important;background:var(--default3);transition:0.3s;}
+  .section-tab-menu{padding:35px 0;}
+  .section-tab-menu .page-width{max-width: 1030px;margin: 0 auto;padding: 0 15px;}
+  .section-tab-menu .tab-head{margin:0;text-align:center;margin-bottom: 15px;}
+  .section-tab-menu .tab-menu-list{margin-bottom:25px;}
+  .section-tab-menu .tab-menu-list ul{display:flex;margin:0;justify-content:center;padding:0;flex-wrap:wrap;}
+  .section-tab-menu li{list-style-type: none;}
+  .section-tab-menu .tab-menu-list ul li {padding: 7px 20px;margin: 0 10px;border-radius: 5px;font-weight: 700;text-transform:uppercase;cursor: pointer;margin-bottom:15px;}
+  .section-tab-menu .pro-block ul{padding:0;margin:0;display:flex;}
+  .section-tab-menu .pro-block ul li{margin:15px 0;}
+  .section-tab-menu .pro-block p{margin:0;}
   
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label{display: inline-block;padding: 10px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label:hover .tooltip1{display:block}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant input[type=radio]{overflow: hidden;position: absolute;height: 1px;width: 1px;visibility:hidden;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1{display:none;text-align: center;background: var(--default3);color: var(--default2);bottom: 100%;padding: 4px 7px;position: absolute;z-index: 2;min-width: 44px;left: 50%;transform: translate(-50%);margin-bottom: 12px;transition: all .25s ease-out;box-shadow: 2px 2px 6px #00000047;}
-    .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1::after{border-left: solid transparent 7px;border-right: solid transparent 7px;border-top: solid var(--default3) 7px;bottom: -7px;content: " ";height: 0;left: 50%;transform: translate(-50%);position: absolute;width: 0;}
-    
-      #section-faq-tab-{{ section.id }} .tab-menu-list ul li{border: 2px solid {{ section.settings.head_color }};color:{{ section.settings.head_color }};}
-  /*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .que{color:{{ section.settings.head_color }};border-bottom: 1px solid {{ section.settings.head_color }};} */
-  /*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .ans{color:{{ section.settings.text_color }};} */
-    #section-faq-tab-{{ section.id }} .faq-tab-btn-block .btn-content a{color:{{ section.settings.text_color }};}
+     .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure figcaption{opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1;visibility:visible;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view.qv-active{opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure{height:305px;position:relative;}
+/*   .section-tab-menu .pro-block .pro-li .pro-img-block figure:hover figcaption{opacity:1;} */
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure a{width:100%;height:100%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure img{object-position:top;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption{position:absolute;bottom:0;width:100%;transition:0.3s;background:var(--default2);padding-bottom:15px; opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c{border:1px solid var(--default);background:var(--default2);color:var(--default3);min-width:100%;margin:0;width:100%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c:hover{background:var(--default3);color:var(--default2);}
   
-  </style>
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;display:none;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block.show{display:block;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close{border:none;background:none;outline:none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close svg{width:12px;height:12px;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close-block{text-align:end;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list{display: flex;flex-wrap: wrap;justify-content: center;padding:10px 0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list a{width:fit-content;margin:0 10px;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.selected{border-bottom:1px solid var(--default3);}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.disabled{color: #8080806b;pointer-events: none;}
   
-  <section class="section-tab-menu" id="section-tab-menu-{{ section.id }}">
-    <div class="container">
-      {% if section.settings.head != blank %}
-      <h1 class="tab-head" style="color:{{ section.settings.head_color }}">
-        {{ section.settings.head }}
-      </h1>
-      {% endif %}
-      <div class="tab-menu-list" >
-        <ul>
-          {% for block in section.blocks %}
-          {% if block.type == 'text' and block.settings.title != blank %}
-          <li class="tab-a" id="{{ forloop.index  }}">{{ block.settings.title }}</li>
-          {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{visibility:hidden;opacity:0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a {text-align:center;width:30px;height:30px;border:1px solid grey;border-radius:50%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a svg{width:15px;}
   
-      {% for block in section.blocks %}
-      {% if block.type=="text" and block.settings.title != blank  %}
+  .section-tab-menu .pro-block .pro-li .pro-info-block{display: flex;flex-direction: column;align-items: center;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-vendor{color:#969696}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-title{text-align:center;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .compare{color:#969696;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .original.comapre-avail{color:var(--primary)}
+
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label{display: inline-block;padding: 10px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label:hover .tooltip1{display:block}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant input[type=radio]{overflow: hidden;position: absolute;height: 1px;width: 1px;visibility:hidden;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1{display:none;text-align: center;background: var(--default3);color: var(--default2);bottom: 100%;padding: 4px 7px;position: absolute;z-index: 2;min-width: 44px;left: 50%;transform: translate(-50%);margin-bottom: 12px;transition: all .25s ease-out;box-shadow: 2px 2px 6px #00000047;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1::after{border-left: solid transparent 7px;border-right: solid transparent 7px;border-top: solid var(--default3) 7px;bottom: -7px;content: " ";height: 0;left: 50%;transform: translate(-50%);position: absolute;width: 0;}
   
-      <div class="tab" id="tab{{forloop.index}}">
-  
-        {% assign i = forloop.index %}   
-        {% assign a = 0 %}
+    #section-faq-tab-{{ section.id }} .tab-menu-list ul li{border: 2px solid {{ section.settings.head_color }};color:{{ section.settings.head_color }};}
+/*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .que{color:{{ section.settings.head_color }};border-bottom: 1px solid {{ section.settings.head_color }};} */
+/*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .ans{color:{{ section.settings.text_color }};} */
+  #section-faq-tab-{{ section.id }} .faq-tab-btn-block .btn-content a{color:{{ section.settings.text_color }};}
+
+</style>
+
+
+
+
+
+<section class="section-tab-menu" id="section-tab-menu-{{ section.id }}">
+  <div class="container">
+    {% if section.settings.head != blank %}
+    <h1 class="tab-head" style="color:{{ section.settings.head_color }}">
+      {{ section.settings.head }}
+    </h1>
+    {% endif %}
+    <div class="tab-menu-list" >
+      <ul>
         {% for block in section.blocks %}
-        {% if forloop.index >= i %}
-  
-        {% if block.settings.title != blank and a == 0 %}
-        {% assign a = 1 %}
-        {% elsif block.settings.title != blank and a == 1 %}
-        {% break %}
-        {% else %}
-        <div class="pro-block">
-          <ul class="pro-block-slider">
-            {% if block.settings.pro1 != blank %}
-            <li class="pro-li">
-              {{ block.settings.pro1.title }}
-              {% assign product = block.settings.pro1 %}
-              <div class="pro-img-block">
-                <figure>
-                  <a href="{{ product.url }}">
-                  <img src="{{ product.featured_image | img_url:"master" }}">
-                  </a>
-                  <figcaption>
-                    <button class="btn pro-a2c" id="a2c" type="submit" name="add">Add to Cart</button>
-                    <div class="pro-variant-block">
-                      <div class="close-block">
-                        <button class="close">
-                          {% render "close-icon" %}
-                        </button>
-                      </div>
-                      <div class="variant-block">
-                        <p class="selected">
-                          Size: 
-                        </p>
-                        <div class="variant-list">
-                          {%- for option in product.options_with_values -%}
-  
-                         
-                          {% for value in option.values %}
-                         
-                          <a class="size-var {% if forloop.first %} selected {% endif %}  {% if option.available == false %}disabled{% endif %}" href="javascript:void(0)">
-                            {{ value }}
-                          </a>
-                         
-                          {% endfor %}
-                        
-                          {% endfor %}
-  
-                          
-  
-                        </div>
-                         <button class="btn pro-a2c" id="sbt" type="submit" name="submit">Submit</button>
-                      </div>
-                    </div>
-                  </figcaption>
-                  <div class="pro-link-top">
-                    
-                    <div class="pro-wishlist">
-                      <a href="/wishlist" title="Wishlist">
-                        {% render 'wishlist-icon' %}
-                      </a>
-                    </div>
-                    
-                  <div class="pro-quick-view">
-                    <a href="javascript:void(0)" title="Quick View">
-                      {% render 'eye-icon' %}
-                    </a>
-                  </div>
-                  </div>
-                </figure>
-              </div>
-              <div class="pro-info-block">
-                
-                
-                <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
-                  {{ product.vendor }}
-                </a>
-                <a href="" class="pro-title">
-                  {{ product.title }}
-                </a>
-                <h6 class="pro-price">
-                  {% if product.compare_at_price != blank %}
-                  <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
-                  {% endif %}
-                  <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
-                </h6>
-                <div class="pro-variant">
-                   
-                  {%- for option in product.options_with_values -%}
-                  {% if option.name == 'Color' %}
-                        
-                          {%- for value in option.values -%}
-                            <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                  name="{{ option.name }}"
-                                  value="{{ value | escape }}"
-                                  form="{{ product_form_id }}"
-                                  {% if forloop.first %}checked="checked"{% endif %}
-                            >
-                  
-                            <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};">
-                             
-                              <div class="tooltip1">{{ value | capitalize }}</div>
-                            </label>
-                          {%- endfor -%}
-                        
-                  {% endif %}
-                    {%- endfor -%}
-                  
-                   
-                  {% comment %}
-                  <select name="id" id="Variants-{{ section.id }}" class="select__select" >
-                    {%- for variant in product.variants -%}
-                      <option
-                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                        {% if variant.available == false %}disabled{% endif %}
-                        value="{{ variant.id }}"
-                      >
-                        {{ variant.title }}
-                        {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-                        - {{ variant.price | money | strip_html }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                  {% form 'product' , product %}
-                 <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
-                  <input type="hidden" name="quantity" value="1">
-                  <input type='submit'>
-                  {% endform %}
-                  
-                  {% endcomment %}
-                  <form  method="post" class="product-form" id="add-to-cart">
-                    <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
-                  <input type="hidden" class="q" name="quantity" value="5">
-                  <input type="button" name="add" value="Purchase" class="btn btn--purchase" onclick="a('add-to-cart')">
-                  </form>
-                </div>
-              </div>
-            </li>
-            {% endif %}
-  
-            {% if block.settings.pro2 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro2.title }}
-            </li>
-            {% endif %}
-  
-            {% if block.settings.pro3 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro3.title }}
-            </li>
-            {% endif %}
-  
-            {% if block.settings.pro4 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro4.title }}
-            </li>
-            {% endif %}
-  
-            {% if block.settings.pro5 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-            {% if block.settings.pro6 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-            {% if block.settings.pro7 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-            {% if block.settings.pro8 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-            {% if block.settings.pro9 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-            {% if block.settings.pro10 != blank %}
-            <li class="pro-li">
-              {{block.settings.pro5.title }}
-            </li>
-            {% endif %}
-  
-          </ul>
-        </div>
-        {% endif %}
+        {% if block.type == 'text' and block.settings.title != blank %}
+        <li class="tab-a" id="{{ forloop.index  }}">{{ block.settings.title }}</li>
         {% endif %}
         {% endfor %}
-      </div>  
+      </ul>
+    </div>
+
+    {% for block in section.blocks %}
+    {% if block.type=="text" and block.settings.title != blank  %}
+
+    <div class="tab" id="tab{{forloop.index}}">
+
+      {% assign i = forloop.index %}   
+      {% assign a = 0 %}
+      {% for block in section.blocks %}
+      {% if forloop.index >= i %}
+
+      {% if block.settings.title != blank and a == 0 %}
+      {% assign a = 1 %}
+      {% elsif block.settings.title != blank and a == 1 %}
+      {% break %}
+      {% else %}
+      <div class="pro-block">
+        <ul class="pro-block-slider">
+          {% if block.settings.pro1 != blank %}
+          <li class="pro-li">
+            {{ block.settings.pro1.title }}
+            {% assign product = block.settings.pro1 %}
+            <div class="pro-img-block">
+              <figure>
+                <a href="{{ product.url }}">
+                <img src="{{ product.featured_image | img_url:"master" }}">
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        
+                        Size: 
+                      </p>
+                      <div class="variant-list">
+                        {%- for option in product.options_with_values -%}
+                        {% if option.name == 'Size' %}
+                        {% for value in option.values %}
+                         <a class="size-var {% if forloop.first %} selected {% endif %} {% if variant.available == false %}disabled{% endif %}" href="javascript:void(0)">
+                          {{ value }}
+                        </a>
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        
+                      </div>
+                        
+<!--                          <button class="btn pro-a2c" id="sbt" type="submit" name="submit">Submit</button> -->
+                      <form  method="post" class="product-form" id="add-to-cart">
+<!--                           <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" > -->
+                        <select class="select-var" name="id">
+                          {% for variant in product.variants %}
+                          <option  value="{{ variant.id }}">
+                            {{ variant.title }}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase pro-a2c" onclick="a('add-to-cart')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="/wishlist" title="Wishlist">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn" href="javascript:void(0)" title="Quick View">
+                    {% render 'icon-eye' %}
+                    {% render 'quick-view' , product:product %}
+                  </a>
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title">
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' %}
+                      
+                        {%- for value in option.values -%}
+                          <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                name="{{ option.name }}"
+                                value="{{ value | escape }}"
+                                form="{{ product_form_id }}"
+                                {% if forloop.first %}checked="checked"{% endif %}
+                          >
+                
+                          <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}">
+                           
+                            <div class="tooltip1">{{ value | capitalize }}</div>
+                          </label>
+                 {%- endfor -%}
+                
+                {% endif %}
+
+                  {%- endfor -%}
+
+<!--                   <form  method="post" class="product-form" id="add-to-cart">
+                  <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
+                <input type="hidden" class="q" name="quantity" value="1">
+                <input type="button" name="add" value="Purchase" class="btn btn--purchase" onclick="a('add-to-cart')">
+                </form>
+-->
+                {% comment %}
+                <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                {%- for option in product.options_with_values -%}
+                    <fieldset class="js product-form__input">
+                      <legend class="form__label">{{ option.name }}</legend>
+                      {%- for value in option.values -%}
+                        <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                              name="{{ option.name }}"
+                              value="{{ value | escape }}"
+                              form="{{ product_form_id }}"
+                              {% if option.selected_value == value %}checked{% endif %}
+                        >
+                        <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" >
+                          {{ value }}
+                        </label>
+                      {%- endfor -%}
+                    </fieldset>
+                {%- endfor -%}
+                <script type="application/json">
+                  {{ product.variants | json }}
+                </script>
+              </variant-radios>
+                {% endcomment %}
+                
+                
+              </div>
+            </div>
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro2 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro2.title }}
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro3 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro3.title }}
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro4 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro4.title }}
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro5 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+          {% if block.settings.pro6 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+          {% if block.settings.pro7 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+          {% if block.settings.pro8 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+          {% if block.settings.pro9 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+          {% if block.settings.pro10 != blank %}
+          <li class="pro-li">
+            {{block.settings.pro5.title }}
+          </li>
+          {% endif %}
+
+        </ul>
+      </div>
+      {% endif %}
       {% endif %}
       {% endfor %}
-    </div>
-  </section>
-  
+    </div>  
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
 <script>
-  $(document).ready(function(){ 
-    $(".tab-menu-list .tab-a").first().addClass("active-a");
-    $(".section-tab-menu .tab").first().addClass("tab-active");
-    $('.tab-menu-list .tab-a').click(function(){  
+$(document).ready(function(){ 
+  $(".tab-menu-list .tab-a").first().addClass("active-a");
+  $(".section-tab-menu .tab").first().addClass("tab-active");
+  $('.tab-menu-list .tab-a').click(function(){  
 
-      $(".section-tab-menu .tab").removeClass('tab-active');
+    $(".section-tab-menu .tab").removeClass('tab-active');
 
-      $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
+    $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
 
-      $(".tab-menu-list .tab-a").removeClass('active-a');
+    $(".tab-menu-list .tab-a").removeClass('active-a');
 
-      $(this).addClass('active-a');
-    });
-
-    //     $(".pro-block-slider").slick({
-    //       infinite: true,
-    //   slidesToShow: 4,
-    //   slidesToScroll: 1
-    //     });
-
-
-    //add to cart open
-    $(".pro-img-block .pro-a2c").click(function(){
-
-      $(this).hide();
-      $(this).parent().children(".pro-variant-block").addClass("show");
-    });
-
-    $(".pro-variant-block .close").click(function(){
-      $(this).parents(".pro-variant-block").removeClass("show");
-      $(this).parents("figcaption").children(".pro-a2c").show();
-    });
-
-    $(".pro-variant label").first().addClass("active");
-    $(".pro-variant label").click(function(){
-      $(".pro-variant label").removeClass("active");
-      $(this).addClass("active");
-      var id = $(this).attr("for");
-      var color = $("#"+id).attr("value");
-      $("#color").html(color);
-    });
-
-    $(".select__select").change(function(){
-      var a = $(".select__select :selected").attr("value");
-      alert(a);
-      $(".var").attr("value",a);
-    });
+    $(this).addClass('active-a');
   });
 
+  //     $(".pro-block-slider").slick({
+  //       infinite: true,
+  //   slidesToShow: 4,
+  //   slidesToScroll: 1
+  //     });
 
-    //ajax
+
+  //add to cart open
+  $(".pro-img-block .pro-a2c").click(function(){
+
+    $(this).hide();
+    $(this).parent().children(".pro-variant-block").addClass("show");
+  });
+
+  $(".pro-variant-block .close").click(function(){
+    $(this).parents(".pro-variant-block").removeClass("show");
+    $(this).parents("figcaption").children(".pro-a2c").show();
+  });
+  
+  //size
+
+  $(".variant-block .size-var").click(function(){
+    $(".variant-block .size-var").removeClass("selected");
+    $(this).addClass("selected");
+  });
+  
+var vals = [];
+$(".select-var option").each(function(){
+vals.push($(this).attr("value"));
+});
+
+console.log("vals =" + vals);
+  console.log("vals =" + vals.length);
+var color;
+  $(".pro-variant label").first().addClass("active");
+  $(".pro-variant label").click(function(){
+    $(".pro-variant label").removeClass("active");
+    $(this).addClass("active");
+    var id = $(this).attr("for");
+    color = $("#"+id).attr("value");
+    $("#color").html(color);
+    
+    
+    
+  });
+
+  $(".select__select").change(function(){
+    var a = $(".select__select :selected").attr("value");
+    alert(a);
+    $(".var").attr("value",a);
+  });
+});
+
+
+//quick view
+$(".pro-quick-view .quick-btn").click(function(ev){
+  $(".quick-view-main").css("display","flex");
+  $("body").css("overflow","hidden");
+  $(".pro-link-top .pro-quick-view").addClass("qv-active");
+  
+});
+
+$(".quick-view-main .qv-btn-close").click(function(e){
+  e.stopPropagation();
+  $(".quick-view-main").css("display","none");
+  $("body").css("overflow","auto");
+  $(".pro-link-top .pro-quick-view").removeClass("qv-active");
+});
+
+
+  //ajax
 
 function a(form_id) {
 
-  alert($('#'+form_id).serialize());
-   $.ajax({
-      type: 'POST', 
-      url: '/cart/add.js',
-      dataType: 'json', 
-      data: $('#'+form_id).serialize(),
-      success: addToCartOk,
-      error: addToCartFail
-    });
+alert($('#'+form_id).serialize());
+ $.ajax({
+    type: 'POST', 
+    url: '/cart/add.js',
+    dataType: 'json', 
+    data: $('#'+form_id).serialize(),
+    success: addToCartOk,
+    error: addToCartFail
+  });
 }
 
 function addToCartOk(product) { 
-   alert("ok");
+ alert("true");
 } 
 
 function addToCartFail(obj, status) { 
-    alert()
- } 
+  alert("false");
+} 
 
 
- 
+</script>  
 
 
-  </script>
-  
-  
-  {% schema %}
-   {
-      "name": "Tab Menu",
-      "settings": [
-          {
-              "type": "text",
-              "id": "head",
-              "label": "Heading",
-              "default":"Heading"
-          },
-          
-          {
-              "type":"color",
-              "id":"head_color",
-              "label":"Heading Color",
-              "default":"#1666ba"
-          },
-          {
-              "type":"color",
-              "id":"text_color",
-              "label":"Text Color",
-              "default":"#000000"
-          },
-          {
-              "type":"color",
-              "id":"btn_back",
-              "label":"Button Background Color",
-              "default":"#368ce7"
-          },
-          {
-              "type":"color",
-              "id":"btn_text",
-              "label":"Button Text Color",
-              "default":"#ffffff"
-          }
-      ],
-      "blocks": [
-          {
-              "type": "text",
-              "name": "Tab Title",
-              "settings": [
-                  {
-                      "type": "text",
-                      "id": "title",
-                      "label": "Tab Title"
-                  }
-              ]
-          },
-          {
-              "type": "richtext",
-              "name": "Products",
-              "settings": [
-                  {
-                      "type": "product",
-                      "id": "pro1",
-                      "label": "Product1"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro2",
-                      "label": "Product2"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro3",
-                      "label": "Product3"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro4",
-                      "label": "Product4"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro5",
-                      "label": "Product5"
-                  },
-  {
-                      "type": "product",
-                      "id": "pro6",
-                      "label": "Product6"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro7",
-                      "label": "Product7"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro8",
-                      "label": "Product8"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro9",
-                      "label": "Product9"
-                  },
-                  {
-                      "type": "product",
-                      "id": "pro10",
-                      "label": "Product10"
-                  }
-                  
-              ]
-          }
-      ],
-      "presets": [
-          {
-              "name": "Tab Menu"
-          }
-      ]
-  }
-  {% endschema %}
-  
-  
+
+{% schema %}
+ {
+    "name": "Tab Menu",
+    "settings": [
+        {
+            "type": "text",
+            "id": "head",
+            "label": "Heading",
+            "default":"Heading"
+        },
+        
+        {
+            "type":"color",
+            "id":"head_color",
+            "label":"Heading Color",
+            "default":"#1666ba"
+        },
+        {
+            "type":"color",
+            "id":"text_color",
+            "label":"Text Color",
+            "default":"#000000"
+        },
+        {
+            "type":"color",
+            "id":"btn_back",
+            "label":"Button Background Color",
+            "default":"#368ce7"
+        },
+        {
+            "type":"color",
+            "id":"btn_text",
+            "label":"Button Text Color",
+            "default":"#ffffff"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Tab Title",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Tab Title"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "name": "Products",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "pro1",
+                    "label": "Product1"
+                },
+                {
+                    "type": "product",
+                    "id": "pro2",
+                    "label": "Product2"
+                },
+                {
+                    "type": "product",
+                    "id": "pro3",
+                    "label": "Product3"
+                },
+                {
+                    "type": "product",
+                    "id": "pro4",
+                    "label": "Product4"
+                },
+                {
+                    "type": "product",
+                    "id": "pro5",
+                    "label": "Product5"
+                },
+{
+                    "type": "product",
+                    "id": "pro6",
+                    "label": "Product6"
+                },
+                {
+                    "type": "product",
+                    "id": "pro7",
+                    "label": "Product7"
+                },
+                {
+                    "type": "product",
+                    "id": "pro8",
+                    "label": "Product8"
+                },
+                {
+                    "type": "product",
+                    "id": "pro9",
+                    "label": "Product9"
+                },
+                {
+                    "type": "product",
+                    "id": "pro10",
+                    "label": "Product10"
+                }
+                
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Tab Menu"
+        }
+    ]
+}
+{% endschema %}
+
