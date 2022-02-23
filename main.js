@@ -139,46 +139,55 @@ $(document).ready(function(){
     $("#color").html(color);
     var pro = label_color.attr("data-handle");
     alllabel_size.removeClass("disabled");
-    
+    alllabel_size.removeClass("selected");
+     var auto = 0;
     $.getJSON("/products/"+ pro +".js", function(product) {
       console.log(product);
       var i;
-      var auto = 0;
+     
       for(i=0;i<= product.variants.length - 1;i++)
       {
+   
         if(product.variants[i].option1 == color && product.variants[i].available == false)
         {
-          //         	console.log(product.variants[i].title);
+          
+                  	console.log(product.variants[i].option2 + product.variants[i].available);
 
           alllabel_size.each(function(){
-
-
+	
+		
             if($(this).attr("data-value") ==  product.variants[i].option2)
             {
               $(this).addClass("disabled");
             }
-            else
-            {
-              if(auto == 0)
-              {
+            else{
+            	console.log($(this).attr("data-value"));
+              if(!$(this).hasClass("disabled") && auto == 0)
+              {              	
                 $(this).addClass("selected");
                 auto = 1;
               }
+              
             }
 
 
           });
         }
+        
       }     
+      $(".select-variant-select").val($(".variant-list .size-var.selected").attr("id"));
+      console.log("id select - " + $(".select-variant-select").val());
     });
   }
+  
 
   product_data($(".pro-variant label"),$(".pro-variant label").first(),$(".variant-list .size-var"))
 
 
-  $(".pro-variant label").click(function(e){
+  $(".pro-variant label").unbind().click(function(e){
     product_data($(".pro-variant label"),$(this),$(".variant-list .size-var"));
-  e.preventDefault();
+//     select();
+
     //     $(".pro-variant label").removeClass("active");
     //     $(this).addClass("active");
     //     var id = $(this).attr("for");
