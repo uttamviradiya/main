@@ -10,7 +10,7 @@
   .section-tab-menu .tab-menu-list{margin-bottom:25px;}
   .section-tab-menu .tab-menu-list ul{display:flex;margin:0;justify-content:center;padding:0;flex-wrap:wrap;}
   .section-tab-menu li{list-style-type: none;}
-  .section-tab-menu .tab-menu-list ul li {padding: 7px 20px;margin: 0 10px;border-radius: 5px;font-weight: 700;text-transform:uppercase;cursor: pointer;margin-bottom:15px;}
+  .section-tab-menu .tab-menu-list ul li {text-align:center;border: 1px solid #8080804d; padding: 15px;min-width:225px; margin: 0 10px;border-radius:40px;font-weight: 700;text-transform:capitalize;cursor: pointer;margin-bottom:15px;}
   .section-tab-menu .pro-block ul{padding:0;margin:0;display:flex;}
   .section-tab-menu .pro-block ul li{margin:15px 0;}
   .section-tab-menu .pro-block p{margin:0;}
@@ -34,7 +34,7 @@
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list{display: flex;flex-wrap: wrap;justify-content: center;padding:10px 0;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list a{width:fit-content;margin:0 10px;}
 .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.selected{border-bottom:1px solid var(--default3);}
-.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.disabled{color: #8080806b;pointer-events: none;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.disabled{color: #8080806b;}
   
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
@@ -124,33 +124,29 @@
                         Size: 
                       </p>
                       <div class="variant-list">
-                        {% comment %}
+                       
                         {%- for option in product.options_with_values -%}
                         {% if option.name == 'Size' %}
                         {% for value in option.values %}
-                         <a class="size-var {% if forloop.first %} selected {% endif %} {% if variant.available == false %}disabled{% endif %}" href="javascript:void(0)">
+                         <a class="size-var " href="javascript:void(0)" data-value="{{ value }}">
                           {{ value }}
                         </a>
                         {% endfor %}
                         {% endif %}
                         {% endfor %}
-                        {% endcomment %}
-                        {% capture color %}<p id="color"></p>{% endcapture %}
-                        {{ color }}
-                        {% for variant in product.variants %}
-                       {% if variant.option1 == "White" and variant.option2 %}
-                        <a class="size-var {% if forloop.first %} selected {% endif %} {% if variant.available == false %}disabled{% endif %}" href="javascript:void(0)">{{ variant.option2 }}</a>
-                      {% endif %}
-                        {% endfor %}
+                        
+                        
                       </div>
                         
 <!--                          <button class="btn pro-a2c" id="sbt" type="submit" name="submit">Submit</button> -->
                       <form  method="post" class="product-form" id="add-to-cart">
 <!--                           <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" > -->
-                        <select class="select-var" name="id">
+                        <select class="select-variant-select" name="id">
                           {% for variant in product.variants %}
-                          <option  value="{{ variant.id }}" class="{% if variant.available == false %}disabled-soldout{% endif %}">
-                            {{ variant.title }}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
                           </option>
                           {% endfor %}
                         </select>
@@ -186,8 +182,9 @@
                 {{ product.vendor }}
               </a>
               <a href="" class="pro-title">
-                {{ product.title }}
+                {{ product.title }} {{ product.id }}
               </a>
+              <p id="handle"> {{ product.handle }}</p>
               <h6 class="pro-price">
                 {% if product.compare_at_price != blank %}
                 <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
@@ -207,7 +204,7 @@
                                 {% if forloop.first %}checked="checked"{% endif %}
                           >
                 
-                          <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}">
+                          <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
                            
                             <div class="tooltip1">{{ value | capitalize }}</div>
                           </label>
@@ -314,7 +311,7 @@
     {% endfor %}
   </div>
 </section>
-
+{{ "main.js" | asset_url | script_tag }}
 <script>
 
 $(document).ready(function(){ 
@@ -356,32 +353,41 @@ $(document).ready(function(){
     $(".variant-block .size-var").removeClass("selected");
     $(this).addClass("selected");
   });
-  
-var vals = [];
-$(".select-var option").each(function(){
-vals.push($(this).attr("value"));
-});
 
-console.log("vals =" + vals);
-  console.log("vals =" + vals.length);
-var color = "White";
-  $("#color").html(color);
-  $(".pro-variant label").first().addClass("active");
-  $(".pro-variant label").click(function(){
-    $(".pro-variant label").removeClass("active");
-    $(this).addClass("active");
-    var id = $(this).attr("for");
-    color = $("#"+id).attr("value");
-    $("#color").html(color);
-    
-    
-    
-  });
+//   var color = "White";
+//   $("#color").html(color);
+//   $(".pro-variant label").first().addClass("active");
+//   $(".pro-variant label").click(function(){
+//     $(".pro-variant label").removeClass("active");
+//     $(this).addClass("active");
+//     var id = $(this).attr("for");
+//     color = $("#"+id).attr("value");
+//     $("#color").html(color);
+//     var pro = $(this).attr("data-handle");
 
-  $(".select__select").change(function(){
-    var a = $(".select__select :selected").attr("value");
-    alert(a);
-    $(".var").attr("value",a);
+//     $.getJSON("/products/"+ pro +".js", function(product) {
+//       console.log(product);
+//       console.log(product.variants.length);
+
+//       $(".variant-list .size-var").each(function(index){
+//         var size = $(this).text();
+//         for(var i = 0;i <= product.variants.length - 1;i++)
+//         {
+//           if(product.varaints[i].option2 == size && product.variants[i].available == "true")
+//           {
+//             size.addClass("disabled");
+//           }
+//         }
+//         console.log($(this).text());
+//       });
+
+//     });
+    
+//   });
+
+  $(".select-variant-select ").change(function(){
+    
+    alert($(this).val());
   });
 });
 
@@ -401,31 +407,68 @@ $(".quick-view-main .qv-btn-close").click(function(e){
   $(".pro-link-top .pro-quick-view").removeClass("qv-active");
 });
 
+  
+//   console.log("select option = " + $(".select-variant-select option").length);
 
   //ajax
 
-function a(form_id) {
+// function a(form_id) {
 
-alert($('#'+form_id).serialize());
- $.ajax({
-    type: 'POST', 
-    url: '/cart/add.js',
-    dataType: 'json', 
-    data: $('#'+form_id).serialize(),
-    success: addToCartOk,
-    error: addToCartFail
-  });
-}
+// alert($('#'+form_id).serialize());
+//  $.ajax({
+//     type: 'POST', 
+//     url: '/cart/add.js',
+//     dataType: 'json', 
+//     data: $('#'+form_id).serialize(),
+//     success: addToCartOk,
+//     error: addToCartFail
+//   });
+// }
 
-function addToCartOk(product) { 
- alert("true");
-} 
+// function addToCartOk(product) { 
+//  alert("true");
+// } 
 
-function addToCartFail(obj, status) { 
-  alert("false");
-} 
+// function addToCartFail(obj, status) { 
+//   alert("false");
+// } 
 
+  
+  
+//   $(document).ready(function(e){
+//     var store_url = "https://udevelopment.myshopify.com/"; // replaced with your shopify store url
+//     var product_id = $("#handle").text(); // replaced with your product id
+//     var full_url = store_url + '/products/' + product_id + '.json';
 
+//     $.ajax({
+//       url: full_url,
+//       success: function(data) {
+//         console.log("product id:" + data.product.id);
+//         console.log("product title:" + data.product.title);
+//         // ... to do 
+//         // all your process with product data logic
+//       }
+//     });
+//   });
+    
+//     jQuery.getJSON('/products/dinterdum-pretium-de-condimentus.js', function(product) {
+//       alert('The title of this product is ' + product.title + product.variants.length + $("#handle").text());
+      
+//     } );
+  
+// new Shopify.OptionSelectors("product-select", { product: {{ product | json }}  , onVariantSelected: selectCallback });
+  
+//   var selectCallback = function(variant, selector) {
+  
+// }
+//    new Shopify.OptionSelectors('product-select', {
+//   product: {{ product | json }},
+//   onVariantSelected: selectCallback,
+//   enableHistoryState: true,
+     
+// });
+  
+    
 </script>  
 
 
