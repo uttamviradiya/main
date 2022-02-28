@@ -153,25 +153,44 @@ $(document).ready(function(){
           
                   	console.log(product.variants[i].option2 + product.variants[i].available);
 
-          alllabel_size.each(function(){
+//           alllabel_size.each(function(){
 	
 		
-            if($(this).attr("data-value") ==  product.variants[i].option2)
+//             if($(this).attr("data-value") ==  product.variants[i].option2)
+//             {
+//               $(this).addClass("disabled");
+//             }
+//             else{
+//             	console.log($(this).attr("data-value"));
+//               if(!$(this).hasClass("disabled") && auto == 0)
+//               {              	
+//                 $(this).addClass("selected");
+//                 auto = 1;
+//               }
+              
+//             }
+
+
+//           });
+          var j;
+          for(j = 0; j < alllabel_size.length;j++)
+          {
+          	if(alllabel_size.eq(j).attr("data-value") == product.variants[i].option2)
             {
-              $(this).addClass("disabled");
+            	alllabel_size.eq(j).addClass("disabled");
             }
             else{
-            	console.log($(this).attr("data-value"));
-              if(!$(this).hasClass("disabled") && auto == 0)
-              {              	
-                $(this).addClass("selected");
+              console.log(alllabel_size.eq(j).attr("data-value"));
+              if(!alllabel_size.eq(j).hasClass("disabled"))
+              {
+                if(auto == 0)
+                {
+              	alllabel_size.eq(j).addClass("selected");
                 auto = 1;
+                }
               }
-              
             }
-
-
-          });
+          }
         }
         
       }     
@@ -181,10 +200,10 @@ $(document).ready(function(){
   }
   
 
-  product_data($(".pro-variant label"),$(".pro-variant label").first(),$(".variant-list .size-var"))
+//   product_data($(".pro-variant label"),$(".pro-variant label").first(),$(".variant-list .size-var"))
 
 
-  $(".pro-variant label").unbind().click(function(e){
+  $(".pro-variant1 label").unbind().click(function(e){
     product_data($(".pro-variant label"),$(this),$(".variant-list .size-var"));
 //     select();
 
@@ -225,6 +244,57 @@ $(document).ready(function(){
   });
 
 
+  $(".pro-variant label").unbind().click(function(){
+  
+    var first = 0 , selected;
+    $(".pro-variant label").removeClass("active");
+        $(this).addClass("active");
+        var id = $(this).attr("for");
+        color = $("#"+id).attr("value");
+        $("#color").html(color);
+        var pro = $(this).attr("data-handle");
+    console.log(pro + color);
+    
+    $.getJSON("/products/" + pro + ".js",function(product){
+    	console.log(product);
+      
+      for (var i = 0 ; i < product.variants.length ; i++)
+      {
+        console.log(first);
+        if(product.variants[i].option1 == color && product.variants[i].available == true)
+        {
+          if(first == 0)
+          {
+          	selected = "selected";
+            first = 1;
+            alert();
+          }
+        	console.log(product.variants[i].option1 + " " + product.variants[i].option2);
+          $('.variant-list').append(
+            $('<a/>')
+            .attr("data-id", "" + product.variants[i].id + "")
+            .addClass("size-var " + selected +"").text("" + product.variants[i].option2 + "")
+          );
+          if(first == 1)
+          {
+          	selected = "";
+          }
+        }
+        else{
+          if(product.variants[i].option1 == color){
+        	console.log("Not availalbe=" + product.variants[i].option1 + " " + product.variants[i].option2);
+            $('.variant-list').append(
+            $('<a/>')
+            .attr("data-id", "" + product.variants[i].id + "")
+            .addClass("size-var disabled").text("" + product.variants[i].option2 + "")
+          );
+          }
+        }
+      }
+    });
+    
+    
+  });
 
 
 });
