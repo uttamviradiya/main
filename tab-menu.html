@@ -17,14 +17,21 @@
   
      .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure figcaption{opacity:1;visibility:visible;}
   .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1;visibility:visible;}
+  
+  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .img2{display:block;}
+  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .img1{display:none;}
+  
 .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view.qv-active{opacity:1;visibility:visible;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure{height:305px;position:relative;}
 /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure:hover figcaption{opacity:1;} */
   .section-tab-menu .pro-block .pro-li .pro-img-block figure a{width:100%;height:100%;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure img{object-position:top;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .img2{display:none;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption{position:absolute;bottom:0;width:100%;transition:0.3s;background:var(--default2);padding-bottom:15px; opacity:1;visibility:visible;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c{border:1px solid var(--default);background:var(--default2);color:var(--default3);min-width:100%;margin:0;width:100%;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c:hover{background:var(--default3);color:var(--default2);}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c.a2c-disabled{opacity: 0.5;pointer-events: none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption form .select-variant-select{display:none}
   
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;display:none;}
 .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block.show{display:block;}
@@ -102,16 +109,21 @@
         <ul class="pro-block-slider">
           {% if block.settings.pro1 != blank %}
           <li class="pro-li">
-            {{ block.settings.pro1.title }}
+          
             {% assign product = block.settings.pro1 %}
             <div class="pro-img-block">
               <figure>
                 <a href="{{ product.url }}">
-                <img src="{{ product.featured_image | img_url:"master" }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.index == 2 %}
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endfor %}
                 </a>
                 <figcaption>
                   {% capture color %}<p id="color"></p>{% endcapture %}
-                  <button class="btn pro-a2c" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
                   <div class="pro-variant-block">
                     <div class="close-block">
                       <button class="close">
@@ -124,7 +136,7 @@
                         Size: 
                       </p>
                       <div class="variant-list">
-                       
+                       {% comment %}
                         {%- for option in product.options_with_values -%}
                         {% if option.name == 'Size' %}
                         {% for value in option.values %}
@@ -134,7 +146,7 @@
                         {% endfor %}
                         {% endif %}
                         {% endfor %}
-                        
+                        {% endcomment %}
                         
                       </div>
                         
@@ -151,7 +163,7 @@
                           {% endfor %}
                         </select>
                         <input type="hidden" class="q" name="quantity" value="1">
-                        <input type="button" name="add" value="Submit" class="btn btn--purchase pro-a2c" onclick="a('add-to-cart')">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart')">
                       </form>
                     </div>
                   </div>
@@ -181,10 +193,10 @@
               <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
                 {{ product.vendor }}
               </a>
-              <a href="" class="pro-title">
-                {{ product.title }} {{ product.id }}
+              <a href="" class="pro-title" >
+                {{ product.title }}
               </a>
-              <p id="handle"> {{ product.handle }}</p>
+             
               <h6 class="pro-price">
                 {% if product.compare_at_price != blank %}
                 <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
@@ -213,39 +225,6 @@
                 {% endif %}
 
                   {%- endfor -%}
-
-<!--                   <form  method="post" class="product-form" id="add-to-cart">
-                  <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" >
-                <input type="hidden" class="q" name="quantity" value="1">
-                <input type="button" name="add" value="Purchase" class="btn btn--purchase" onclick="a('add-to-cart')">
-                </form>
--->
-                {% comment %}
-                <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-                {%- for option in product.options_with_values -%}
-                    <fieldset class="js product-form__input">
-                      <legend class="form__label">{{ option.name }}</legend>
-                      {%- for value in option.values -%}
-                        <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                              name="{{ option.name }}"
-                              value="{{ value | escape }}"
-                              form="{{ product_form_id }}"
-                              {% if option.selected_value == value %}checked{% endif %}
-                        >
-                        <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" >
-                          {{ value }}
-                        </label>
-                      {%- endfor -%}
-                    </fieldset>
-                {%- endfor -%}
-                <script type="application/json">
-                  {{ product.variants | json }}
-                </script>
-              </variant-radios>
-                {% endcomment %}
-                
-                
-                
                 
               </div>
             </div>
@@ -336,7 +315,7 @@ $(document).ready(function(){
 
 
   //add to cart open
-  $(".pro-img-block .pro-a2c").click(function(){
+  $(".pro-img-block .pro-a2c1").click(function(){
 
     $(this).hide();
     $(this).parent().children(".pro-variant-block").addClass("show");
@@ -348,10 +327,23 @@ $(document).ready(function(){
   });
   
   //size
-
-  $(".variant-block .size-var").click(function(){
-    $(".variant-block .size-var").removeClass("selected");
+$('.variant-list').on('click', '.size-var', function() {
+//   $(".variant-list .size-var").click(function(){
+   
+    $(".variant-list .size-var").removeClass("selected");
     $(this).addClass("selected");
+    
+  var var_id = $(this).attr("data-id");
+    $(".select-variant-select").val(var_id);
+  
+  if($(this).hasClass("disabled"))
+  {
+    $(".product-form .btn--purchase").addClass("a2c-disabled");
+  }
+  else
+  {
+  	$(".product-form .btn--purchase").removeClass("a2c-disabled");
+  }
   });
 
 //   var color = "White";
@@ -412,26 +404,26 @@ $(".quick-view-main .qv-btn-close").click(function(e){
 
   //ajax
 
-// function a(form_id) {
+function a(form_id) {
 
 // alert($('#'+form_id).serialize());
-//  $.ajax({
-//     type: 'POST', 
-//     url: '/cart/add.js',
-//     dataType: 'json', 
-//     data: $('#'+form_id).serialize(),
-//     success: addToCartOk,
-//     error: addToCartFail
-//   });
-// }
+ $.ajax({
+    type: 'POST', 
+    url: '/cart/add.js',
+    dataType: 'json', 
+    data: $('#'+form_id).serialize(),
+    success: addToCartOk,
+    error: addToCartFail
+  });
+}
 
-// function addToCartOk(product) { 
-//  alert("true");
-// } 
+function addToCartOk(product) { 
+ alert("true");
+} 
 
-// function addToCartFail(obj, status) { 
-//   alert("false");
-// } 
+function addToCartFail(obj, status) { 
+  alert("false");
+} 
 
   
   

@@ -243,10 +243,14 @@ $(document).ready(function(){
 
   });
 
-
+$(".pro-variant label").first().trigger("click");
   $(".pro-variant label").unbind().click(function(){
+    $(".pro-variant-block").removeClass("show");
+    $(".pro-img-block .pro-a2c1").show();
+//     alert("select val = " + $(".select-variant-select").val())
   
-    var first = 0 , selected;
+    var first = 0 , selected = "not_selected";
+    $('.variant-list .size-var').remove();
     $(".pro-variant label").removeClass("active");
         $(this).addClass("active");
         var id = $(this).attr("for");
@@ -263,16 +267,21 @@ $(document).ready(function(){
         console.log(first);
         if(product.variants[i].option1 == color && product.variants[i].available == true)
         {
+//           if(product.variants[i].featured_image != null)
+//           {
+//           	$(".img1").attr("src",""+ product.variants[i].featured_image.src + "");
+//             $(".img2").attr("src",""+ product.variants[i].featured_image.src + "");
+//           }
           if(first == 0)
           {
           	selected = "selected";
             first = 1;
-            alert();
+//             alert();
           }
         	console.log(product.variants[i].option1 + " " + product.variants[i].option2);
           $('.variant-list').append(
             $('<a/>')
-            .attr("data-id", "" + product.variants[i].id + "")
+            .attr({"data-id": "" + product.variants[i].id + "","href":"javascript:void(0)"})
             .addClass("size-var " + selected +"").text("" + product.variants[i].option2 + "")
           );
           if(first == 1)
@@ -285,16 +294,30 @@ $(document).ready(function(){
         	console.log("Not availalbe=" + product.variants[i].option1 + " " + product.variants[i].option2);
             $('.variant-list').append(
             $('<a/>')
-            .attr("data-id", "" + product.variants[i].id + "")
+            .attr({"data-id": "" + product.variants[i].id + "","href":"javascript:void(0)"})
             .addClass("size-var disabled").text("" + product.variants[i].option2 + "")
           );
           }
         }
+        selected_var();
+      }
+      if(selected == "not_selected")
+      {
+      	console.log("not_selected");
+        $('.variant-list .size-var').first().addClass("selected")
       }
     });
-    
+     $(".variant-list .size-var").trigger("click");
     
   });
+  
+  function selected_var(){
+  	var var_id = $(".variant-list .size-var.selected").attr("data-id");
+    $(".select-variant-select").val(var_id);
+//     alert(var_id);
+    console.log(var_id);
+    console.log("select val = " + $(".select-variant-select").val());
+  }
 
 
 });
