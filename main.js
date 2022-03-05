@@ -243,8 +243,10 @@ $(document).ready(function(){
 
   });
 
+ 
+ 
 $(".pro-variant label").first().trigger("click");
-  $(".pro-variant label").unbind().click(function(){
+  $(".pro-variant label").off().click(function(){
     $(".pro-variant-block").removeClass("show");
     $(".pro-img-block .pro-a2c1").show();
 //     alert("select val = " + $(".select-variant-select").val())
@@ -260,25 +262,29 @@ $(".pro-variant label").first().trigger("click");
     console.log(pro + color);
     
     $.getJSON("/products/" + pro + ".js",function(product){
-    	console.log(product);
+//     	console.log(product);
+   
+        	image(product,color);
       
       for (var i = 0 ; i < product.variants.length ; i++)
       {
-        console.log(first);
+        
+//         console.log(first);
         if(product.variants[i].option1 == color && product.variants[i].available == true)
         {
-//           if(product.variants[i].featured_image != null)
+//           if(product.variants[i].image != null)
 //           {
-//           	$(".img1").attr("src",""+ product.variants[i].featured_image.src + "");
-//             $(".img2").attr("src",""+ product.variants[i].featured_image.src + "");
+//           	$(".img1").attr("src",""+ product.variants[i].image.src + "");
+//             $(".img2").attr("src",""+ product.variants[i].image.src + "");
 //           }
+          
           if(first == 0)
           {
           	selected = "selected";
             first = 1;
 //             alert();
           }
-        	console.log(product.variants[i].option1 + " " + product.variants[i].option2);
+//         	console.log(product.variants[i].option1 + " " + product.variants[i].option2);
           $('.variant-list').append(
             $('<a/>')
             .attr({"data-id": "" + product.variants[i].id + "","href":"javascript:void(0)"})
@@ -291,7 +297,7 @@ $(".pro-variant label").first().trigger("click");
         }
         else{
           if(product.variants[i].option1 == color){
-        	console.log("Not availalbe=" + product.variants[i].option1 + " " + product.variants[i].option2);
+//         	console.log("Not availalbe=" + product.variants[i].option1 + " " + product.variants[i].option2);
             $('.variant-list').append(
             $('<a/>')
             .attr({"data-id": "" + product.variants[i].id + "","href":"javascript:void(0)"})
@@ -314,10 +320,36 @@ $(".pro-variant label").first().trigger("click");
   function selected_var(){
   	var var_id = $(".variant-list .size-var.selected").attr("data-id");
     $(".select-variant-select").val(var_id);
+//     $(".pro-img-block .img2").attr("src");
 //     alert(var_id);
-    console.log(var_id);
-    console.log("select val = " + $(".select-variant-select").val());
+    
+//     console.log("select val = " + $(".select-variant-select").val());
   }
+  
 
+  function image(p,color){
+   
+    var src = "";
+  	for(var i = 0 ; i< p.variants.length; i++)
+    {
+    	if(p.variants[i].option1 == color)
+        {
+          if ( typeof p.variants[i].featured_image !== 'undefined' && p.variants[i].featured_image !== null )
+          {
+// 			console.log(p.variants[i].featured_image.src);
+            console.log(color);
+            src = p.variants[i].featured_image.src;
+			$(".pro-img-block .img1").attr("src",src);
+          }
+          
+          
+        }
+    }
+    if(src == "")
+    {
+      src = p.images[0];
+      $(".pro-img-block .img1").attr("src",src);
+    }
+  }
 
 });
