@@ -32,7 +32,7 @@
   /*  color  */
   .quick-view-main .quick-view-main-block .qv-pro-variant{margin:20px 0 0}
   .quick-view-main .quick-view-main-block .qv-pro-variant-inner{position:relative;}
-  .quick-view-main .quick-view-main-block .qv-pro-variant .pro-attr-block, .quick-view-main .quick-view-main-block .qv-pro-variant-option2 .pro-attr-block{display:flex;}
+  .quick-view-main .quick-view-main-block .pro-attr-block{display:flex;}
   .quick-view-main .quick-view-main-block .qv-pro-variant label{display: inline-block;padding: 12px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px 10px;}
   .quick-view-main .quick-view-main-block .qv-pro-variant label:hover .tooltip1{display:block}
   .quick-view-main .quick-view-main-block .qv-pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
@@ -70,6 +70,9 @@
 .quick-view-main .quick-view-main-block .qv-form-control input[type=number] {  -moz-appearance: textfield;}
   
   .quick-view-main .quick-view-main-block .qv-select-variant-select{display:none;}
+  .quick-view-main .quick-view-main-block .qv-subtotal{margin:0 10px;}
+  
+  .quick-view-main .quick-view-main-block .qv-pro-a2c.a2c-qv-disabled{opacity: 0.5;pointer-events: none;}
   
   .quick-view-main{display:flex;}
 
@@ -93,6 +96,7 @@
                 <img src="{{ image | img_url:"master" }}">
               </figure>
               {% endfor %}
+              {% comment %}
               {% for variant in product.variants %}
               {% if variant.image != blank %}
               <figure  data-value="{{ variant.option1 }}">
@@ -100,6 +104,7 @@
               </figure>
               {% endif %}
               {% endfor %}
+              {% endcomment %}
             </div>
           </div>
           <div class="product-media-multi">
@@ -242,7 +247,7 @@
             <div class="qv-form-control">
               <div class="pro-attr-block">
                 <h6 class="pro-attr">
-                  Sub Total::
+                  Sub Total:
                 </h6>
                 <span class="qv-subtotal"></span>
               </div>
@@ -351,6 +356,7 @@
       $(".qv-pro-variant-option2 .qv-option2").text($(this).text());
       qv_select();
       subtotal();
+      a2c_disabled();
     });
     
     //quantity selector
@@ -415,10 +421,24 @@ function addToCartFail1(obj, status) {
 // alert(Shopify.formatMoney(price));
       $(".qv-pro-price").text(price);
       
+      var q = $(".qv-q-selector .qv-q").val();
+      $(".qv-subtotal").text(price * q);
+      
     }
     subtotal();
     
   });
   
+  function a2c_disabled()
+  {
+//     alert($(".qv-pro-variant-inner-option2 label.selected").hasClass("available"))
+    if(!$(".qv-pro-variant-inner-option2 label.selected").hasClass("available"))
+    {
+      $(".qv-product-form .qv-pro-a2c").addClass("a2c-qv-disabled");
+    }
+    else{
+    	 $(".qv-product-form .qv-pro-a2c").removeClass("a2c-qv-disabled");
+    }
+  }
 
 </script>
