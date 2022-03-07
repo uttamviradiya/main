@@ -18,13 +18,13 @@
      .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure figcaption{opacity:1;visibility:visible;}
   .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1;visibility:visible;}
   
-  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .img2{display:block;}
-  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .img1{display:none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block:hover  figure .img2{display:block;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block:hover  figure .img1{display:none;}
   
 .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view.qv-active{opacity:1;visibility:visible;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure{height:305px;position:relative;}
 /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure:hover figcaption{opacity:1;} */
-  .section-tab-menu .pro-block .pro-li .pro-img-block figure a{width:100%;height:100%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .figure-a{width:100%;height:100%;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure img{object-position:top;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .img2{display:none;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption{position:absolute;bottom:0;width:100%;transition:0.3s;background:var(--default2);padding-bottom:15px; opacity:1;visibility:visible;}
@@ -46,8 +46,8 @@
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{visibility:hidden;opacity:0;}
-  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a {text-align:center;width:30px;height:30px;border:1px solid grey;border-radius:50%;}
-  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top a svg{width:15px;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .a-btn {text-align:center;width:30px;height:30px;border:1px solid grey;border-radius:50%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .a-btn svg{width:15px;}
   
   .section-tab-menu .pro-block .pro-li .pro-info-block{display: flex;flex-direction: column;align-items: center;}
   .section-tab-menu .pro-block .pro-li .pro-info-block .pro-vendor{color:#969696}
@@ -63,8 +63,7 @@
   .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1::after{border-left: solid transparent 7px;border-right: solid transparent 7px;border-top: solid var(--default3) 7px;bottom: -7px;content: " ";height: 0;left: 50%;transform: translate(-50%);position: absolute;width: 0;}
   
     #section-faq-tab-{{ section.id }} .tab-menu-list ul li{border: 2px solid {{ section.settings.head_color }};color:{{ section.settings.head_color }};}
-/*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .que{color:{{ section.settings.head_color }};border-bottom: 1px solid {{ section.settings.head_color }};} */
-/*   #section-faq-tab-{{ section.id }} .que-ans-block .que-ans-li .ans{color:{{ section.settings.text_color }};} */
+
   #section-faq-tab-{{ section.id }} .faq-tab-btn-block .btn-content a{color:{{ section.settings.text_color }};}
 
 </style>
@@ -113,7 +112,7 @@
             {% assign product = block.settings.pro1 %}
             <div class="pro-img-block">
               <figure>
-                <a href="{{ product.url }}">
+                <a class="figure-a" href="{{ product.url }}">
                 <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
                   {% for img in product.images %}
                   {% if forloop.index == 2 %}
@@ -132,27 +131,14 @@
                     </div>
                     <div class="variant-block">
                       <p class="selected-var">
-                        
                         Size: 
                       </p>
                       <div class="variant-list">
-                       {% comment %}
-                        {%- for option in product.options_with_values -%}
-                        {% if option.name == 'Size' %}
-                        {% for value in option.values %}
-                         <a class="size-var " href="javascript:void(0)" data-value="{{ value }}">
-                          {{ value }}
-                        </a>
-                        {% endfor %}
-                        {% endif %}
-                        {% endfor %}
-                        {% endcomment %}
+                      
                         
                       </div>
                         
-<!--                          <button class="btn pro-a2c" id="sbt" type="submit" name="submit">Submit</button> -->
                       <form  method="post" class="product-form" id="add-to-cart">
-<!--                           <input type="hidden" class="var" name="id" value="{{ product.selected_or_first_available_variant.id }}" > -->
                         <select class="select-variant-select" name="id">
                           {% for variant in product.variants %}
                           <option value="{{ variant.id }}"
@@ -171,24 +157,23 @@
                 <div class="pro-link-top">
                   
                   <div class="pro-wishlist">
-                    <a href="/wishlist" title="Wishlist">
+                    <a href="/wishlist" title="Wishlist" class="a-btn">
                       {% render 'wishlist-icon' %}
                     </a>
                   </div>
                   
-                <div class="pro-quick-view">
-                  <a class="quick-btn" href="javascript:void(0)" title="Quick View">
+                <div class="pro-quick-view qv-active">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
                     {%  render 'icon-eye' %}
-                    {% comment %}
+                   </a>  
                     {% render 'quick-view' , product:product %}
-                    {% endcomment %}
-                  </a>
+ 
+                 
                 </div>
                 </div>
               </figure>
             </div>
             <div class="pro-info-block">
-              
               
               <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
                 {{ product.vendor }}
@@ -196,7 +181,6 @@
               <a href="" class="pro-title" >
                 {{ product.title }}
               </a>
-             
               <h6 class="pro-price">
                 {% if product.compare_at_price != blank %}
                 <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
@@ -204,28 +188,21 @@
                 <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
               </h6>
               <div class="pro-variant">
-                
                 {%- for option in product.options_with_values -%}
-                {% if option.name == 'Color' %}
-                      
-                        {%- for value in option.values -%}
-                          <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                                name="{{ option.name }}"
-                                value="{{ value | escape }}"
-                                form="{{ product_form_id }}"
-                                {% if forloop.first %}checked="checked"{% endif %}
-                          >
-                
-                          <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
-                           
-                            <div class="tooltip1">{{ value | capitalize }}</div>
-                          </label>
-                 {%- endfor -%}
-                
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
                 {% endif %}
-
-                  {%- endfor -%}
-                
+                {%- endfor -%}
               </div>
             </div>
           </li>
@@ -346,36 +323,6 @@ $('.variant-list').on('click', '.size-var', function() {
   }
   });
 
-//   var color = "White";
-//   $("#color").html(color);
-//   $(".pro-variant label").first().addClass("active");
-//   $(".pro-variant label").click(function(){
-//     $(".pro-variant label").removeClass("active");
-//     $(this).addClass("active");
-//     var id = $(this).attr("for");
-//     color = $("#"+id).attr("value");
-//     $("#color").html(color);
-//     var pro = $(this).attr("data-handle");
-
-//     $.getJSON("/products/"+ pro +".js", function(product) {
-//       console.log(product);
-//       console.log(product.variants.length);
-
-//       $(".variant-list .size-var").each(function(index){
-//         var size = $(this).text();
-//         for(var i = 0;i <= product.variants.length - 1;i++)
-//         {
-//           if(product.varaints[i].option2 == size && product.variants[i].available == "true")
-//           {
-//             size.addClass("disabled");
-//           }
-//         }
-//         console.log($(this).text());
-//       });
-
-//     });
-    
-//   });
 
   $(".select-variant-select ").change(function(){
     
@@ -390,6 +337,29 @@ $(".pro-quick-view .quick-btn").click(function(ev){
   $("body").css("overflow","hidden");
   $(".pro-link-top .pro-quick-view").addClass("qv-active");
   
+  $(".qv-pro-variant-inner label").first().trigger("click");
+   
+  
+  $('.product-media-slider-single').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.product-media-slider-multi',
+    prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+    nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+  });
+  
+  $('.product-media-slider-multi').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    asNavFor: '.product-media-slider-single',
+    prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+    nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
+    focusOnSelect: true
+  });
+  
 });
 
 $(".quick-view-main .qv-btn-close").click(function(e){
@@ -400,7 +370,6 @@ $(".quick-view-main .qv-btn-close").click(function(e){
 });
 
   
-//   console.log("select option = " + $(".select-variant-select option").length);
 
   //ajax
 
@@ -425,41 +394,6 @@ function addToCartFail(obj, status) {
   alert("false");
 } 
 
-  
-  
-//   $(document).ready(function(e){
-//     var store_url = "https://udevelopment.myshopify.com/"; // replaced with your shopify store url
-//     var product_id = $("#handle").text(); // replaced with your product id
-//     var full_url = store_url + '/products/' + product_id + '.json';
-
-//     $.ajax({
-//       url: full_url,
-//       success: function(data) {
-//         console.log("product id:" + data.product.id);
-//         console.log("product title:" + data.product.title);
-//         // ... to do 
-//         // all your process with product data logic
-//       }
-//     });
-//   });
-    
-//     jQuery.getJSON('/products/dinterdum-pretium-de-condimentus.js', function(product) {
-//       alert('The title of this product is ' + product.title + product.variants.length + $("#handle").text());
-      
-//     } );
-  
-// new Shopify.OptionSelectors("product-select", { product: {{ product | json }}  , onVariantSelected: selectCallback });
-  
-//   var selectCallback = function(variant, selector) {
-  
-// }
-//    new Shopify.OptionSelectors('product-select', {
-//   product: {{ product | json }},
-//   onVariantSelected: selectCallback,
-//   enableHistoryState: true,
-     
-// });
-  
     
 </script>  
 

@@ -1,93 +1,424 @@
 <style>
-    /*   .quick-view-main{display:none;} */
-    /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1 !important;visibility:visible !important;} */
-      .quick-view-main{display:none;position: fixed;top:0;left:0;width:100%;height:100%;z-index:1111;align-items: center;justify-content: center;cursor: auto;}
-      .quick-view-main .quick-view-main-wrapper{position:absolute;top:0;width:100%;height:100%;background:#0000007a;z-index:111;}
-      .quick-view-main .quick-view-container{background: white;width:75%;height:85%;z-index:11111;position:relative;}
-      
-      .quick-view-main .qv-btn-close{position: absolute;top: -15px;right: -15px;border: none;background: var(--default3);color: var(--default2);padding:10px;line-height:0;}
-      .quick-view-main .qv-btn-close svg{width:10px;height:10px;fill:var(--default2);}
-      
-      .quick-view-main .quick-view-main-block{width:100%;height:100%;overflow:auto;padding:50px;}
-      
-      .qv-arrow{position: absolute;top: 50%;border: none;background: none;font-size: 20px;z-index:1111;transform:translateY(-50%);outline:0 !important}
-      .qv-arrow.qv-prev{left:-25px;}
-      .qv-arrow.qv-next{right:-25px;}
-      .quick-view-main .quick-view-container .product-media-single .product-media-slider-single figure{max-height:520px;height:100%;}
-      .quick-view-main .quick-view-container .product-media-multi .product-media-slider-multi figure{height:100px;margin:5px;}
-      .quick-view-main .quick-view-container .product-media-single{margin-bottom:20px;}
-    
-    </style>
-    
-    <div class="quick-view-main">
-      <div class="quick-view-main-wrapper">
-      </div>
-      <div class="quick-view-container">
-        <button class="qv-btn-close">
-          {% render 'close-icon' %}
-        </button>
-        <div class="quick-view-main-block">
-          <div class="row">
-            <div class="col-5">
-              <div class="product-media-single">
-                <div class="product-media-slider-single">
-                
-                  {% for image in product.images %}
-                  <figure>
-                    <img src="{{ image | img_url:"master" }}">
-                  </figure>
-                  {% endfor %}
-                </div>
-                </div>
-              <div class="product-media-multi">
-                
-               
-                <div class="product-media-slider-multi">
-                  
-                  {% for image in product.images %}
-                  <figure>
-                    <img src="{{ image | img_url:"master" }}">
-                  </figure>
-                  {% endfor %}
-    
-                </div>
-               
-              </div>
+  /*   .quick-view-main{display:none;} */
+  /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1 !important;visibility:visible !important;} */
+  .quick-view-main{display:none;position: fixed;top:0;left:0;width:100%;height:100%;z-index:1111;align-items: center;justify-content: center;cursor: auto;}
+  .quick-view-main .quick-view-main-wrapper{position:absolute;top:0;width:100%;height:100%;background:#0000007a;z-index:111;}
+  .quick-view-main .quick-view-container{background: white;width:75%;height:85%;z-index:11111;position:relative;}
+
+  .quick-view-main .qv-btn-close{position: absolute;top: -15px;right: -15px;border: none;background: var(--default3);color: var(--default2);padding:10px;line-height:0;}
+  .quick-view-main .qv-btn-close svg{width:10px;height:10px;fill:var(--default2);}
+
+  .quick-view-main .quick-view-main-block{width:100%;height:100%;overflow:auto;padding:50px;}
+
+  .qv-arrow{position: absolute;top: 50%;border: none;background: none;font-size: 20px;z-index:1111;transform:translateY(-50%);outline:0 !important}
+  .qv-arrow.qv-prev{left:-25px;}
+  .qv-arrow.qv-next{right:-25px;}
+  .quick-view-main .quick-view-container .product-media-single .product-media-slider-single figure{max-height:520px;height:100%;}
+  .quick-view-main .quick-view-container .product-media-multi{padding:0 25px;}
+  .quick-view-main .quick-view-container .product-media-multi .product-media-slider-multi figure{height:100px;margin:5px;}
+  .quick-view-main .quick-view-container .product-media-single{margin-bottom:20px;}
+
+  .quick-view-main .quick-view-main-block .pro-title{font-size: 24px;font-weight: 500;margin-bottom: 14px;}
+  .quick-view-main .quick-view-main-block .sell-info{color:var(--primary); text-align: right;}
+  .quick-view-main .quick-view-main-block .product-info-table{width:100%;}
+  .quick-view-main .quick-view-main-block .product-info-table tr{text-align:left;margin-bottom: 10px;display: block;}
+  .quick-view-main .quick-view-main-block .product-info-table tr td:first-child{min-width:120px;}
+  .quick-view-main .quick-view-main-block .product-info-table tr td:last-child{width:75%;}
+
+
+  .quick-view-main .quick-view-main-block .qv-pro-price{margin:15px 0}
+  .quick-view-main .quick-view-main-block .pro-desc{height: 48px;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+
+  /*  color  */
+  .quick-view-main .quick-view-main-block .qv-pro-variant{margin:20px 0 0}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner{position:relative;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant .pro-attr-block, .quick-view-main .quick-view-main-block .qv-pro-variant-option2 .pro-attr-block{display:flex;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant label{display: inline-block;padding: 12px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px 10px;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant label:hover .tooltip1{display:block}
+  .quick-view-main .quick-view-main-block .qv-pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant input[type=radio]{overflow: hidden;position: absolute;height: 1px;width: 1px;visibility:hidden;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant .tooltip1{display:none;text-align: center;background: var(--default3);color: var(--default2);bottom: 100%;padding: 4px 7px;position: absolute;z-index: 2;min-width: 44px;left: 50%;transform: translate(-50%);margin-bottom: 12px;transition: all .25s ease-out;box-shadow: 2px 2px 6px #00000047;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant .tooltip1::after{border-left: solid transparent 7px;border-right: solid transparent 7px;border-top: solid var(--default3) 7px;bottom: -7px;content: " ";height: 0;left: 50%;transform: translate(-50%);position: absolute;width: 0;}
+
+  /*  size  */
+  .quick-view-main .quick-view-main-block .qv-pro-variant-option2{margin:20px 0 0}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label{display: inline-block;padding: 0px 5px;cursor: pointer;position: relative;border-radius: 17px;border: 1px solid white;box-shadow: 0 0 0 1.5px #e9e9e9;margin: 3px 7px;min-width: 34px;height: 34px;text-align: center;line-height: 34px;font-weight: 500;opacity:0.4}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label.available{opacity:1;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 .selected{border-color:var(--default3);}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label:hover .tooltip1{display:block}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 input[type=radio]{overflow: hidden;position: absolute;height: 1px;width: 1px;visibility:hidden;}
+  
+/*  pro-form  */
+  .quick-view-main .quick-view-main-block .qv-form-control{margin-top:15px;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-q-selector{width:fit-content; border:1px solid #7b7b7b;display:flex;height:38px;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-q{display: inline-block;width: 75px;vertical-align: middle;border: none;height:36px;outline:0;text-align:center;color:#7b7b7b}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-q-btn{border: none;background: none;font-size: 28px;width:38px;position:relative;outline:0;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-minus{border-right:1px solid #7b7b7b;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-plus{border-left:1px solid #7b7b7b;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-q-btn::before , .quick-view-main .quick-view-main-block .qv-form-control .qv-q-btn::after{content:"";position:absolute; top:50%;left:50%;transform:translate(-50%,-50%);background:#7b7b7b;width:35%; height:2px;}
+  
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-plus::after{width:2px;height:35%;}
+  
+  
+.quick-view-main .quick-view-main-block .qv-form-control input::-webkit-outer-spin-button,
+.quick-view-main .quick-view-main-block .qv-form-control input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+ 
+}
+.quick-view-main .quick-view-main-block .qv-form-control input[type=number] {  -moz-appearance: textfield;}
+  
+  .quick-view-main .quick-view-main-block .qv-select-variant-select{display:none;}
+  
+  .quick-view-main{display:flex;}
+
+</style>
+
+<div class="quick-view-main">
+  <div class="quick-view-main-wrapper">
+  </div>
+  <div class="quick-view-container">
+    <button class="qv-btn-close">
+      {% render 'close-icon' %}
+    </button>
+    <div class="quick-view-main-block">
+      <div class="row">
+        <div class="col-5">
+          <div class="product-media-single">
+            <div class="product-media-slider-single">
+
+              {% for image in product.images %}
+              <figure>
+                <img src="{{ image | img_url:"master" }}">
+              </figure>
+              {% endfor %}
+              {% for variant in product.variants %}
+              {% if variant.image != blank %}
+              <figure  data-value="{{ variant.option1 }}">
+                <img src="{{ variant.image | img_url:"master" }}" >
+              </figure>
+              {% endif %}
+              {% endfor %}
+            </div>
           </div>
-            <div class="col-7">
-              pro desc
-              {{ product.title }}
-          </div>
+          <div class="product-media-multi">
+
+
+            <div class="product-media-slider-multi">
+
+              {% for image in product.images %}
+              <figure>
+                <img src="{{ image | img_url:"master" }}">
+              </figure>
+              {% endfor %}
+              {% for variant in product.variants %}
+              {% if variant.image != blank %}
+              <figure  data-value="{{ variant.option1 }}">
+                <img src="{{ variant.image | img_url:"master" }}" >
+              </figure>
+              {% endif %}
+              {% endfor %}
+
+            </div>
+
           </div>
         </div>
+        <div class="col-7">
+          <a href="{{ product.title }}" class="pro-title">
+            {{ product.title }}
+          </a>
+          <p class="sell-info">
+            {% assign min = 5 %}
+            {% assign max = 15 %}
+            {% assign diff = max | minus: min %}
+            {% assign random1 = "now" | date: "%N" | modulo: diff | plus: min %}
+            {% assign min = 5 %}
+            {% assign max = 35 %}
+            {% assign diff = max | minus: min %}
+            {% assign random2 = "now" | date: "%N" | modulo: diff | plus: min %}
+            {{ random1 }} Sold in last {{ random2 }} Hours
+          </p>
+          <table class="product-info-table">
+            <tr>
+              <td>Brand:</td>
+              <td>{{ product.vendor }}</td>
+            </tr>
+            <tr>
+              <td>Product Code:</td>
+              <td class="product-sku">ABC123</td>
+            </tr>
+            <tr>
+              <td>Availability:</td>
+              <td class="product-quantity">12</td>
+            </tr>
+          </table>
+
+          <h5 class="qv-pro-price">
+            {% comment %}
+            {{ product.price | money_without_trailing_zeros }}
+            {% endcomment %}
+          </h5>
+          <div class="pro-desc">
+            {{ product.description }}
+          </div>
+          <div class="qv-pro-variant">
+            <div class="pro-attr-block">
+              <h6 class="pro-attr">
+                Color
+              </h6>
+              <em style="color:var(--primary);margin:0 10px;">*</em><span class="qv-option1"></span>
+            </div>
+            <div class="qv-pro-variant-inner">
+              {%- for option in product.options_with_values -%}
+              {% if option.name == 'Color' or option.name == "Colour" %}
+              {%- for value in option.values -%}
+              <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                     name="{{ option.name }}"
+                     value="{{ value | escape }}"
+                     form="{{ product_form_id }}"
+                     {% if forloop.first %}checked="checked"{% endif %}
+                     >
+              <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                <div class="tooltip1">{{ value | capitalize }}</div>
+              </label>
+              {%- endfor -%}
+              {% endif %}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="qv-pro-variant-option2">
+            <div class="pro-attr-block">
+              <h6 class="pro-attr">
+                Size
+              </h6>
+              <em style="color:var(--primary);margin:0 10px;">*</em><span class="qv-option2"></span>
+            </div>
+            <div class="qv-pro-variant-inner-option2">
+              {%- for option in product.options_with_values -%}
+              {% if option.name == 'Size'  %}
+              {%- for value in option.values -%}
+              <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                     name="{{ option.name }}"
+                     value="{{ value | escape }}"
+                     form="{{ product_form_id }}"
+                     {% if forloop.first %}checked="checked"{% endif %}
+                     >
+              <label class="qv-label-option2"  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" data-value="{{ value }}" data-handle="{{ product.handle }}">
+                {{  value }}
+              </label>
+              {%- endfor -%}
+              {% endif %}
+              {%- endfor -%}
+            </div>
+          </div>
+          
+<!-- product form -->
+          <form  method="post" class="qv-product-form" id="qv-a2c">
+            <select class="qv-select-variant-select" name="id">
+              {% for variant in product.variants %}
+              <option value="{{ variant.id }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                      >
+                {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+              </option>
+              {% endfor %}
+            </select>
+            
+<!--             <input type="hidden" class="qv-q" name="quantity" value="1" > -->
+            <div class="qv-form-control">
+              <div class="pro-attr-block">
+                <h6 class="pro-attr">
+                  Quantity:
+                </h6>
+              </div>
+              <div class="qv-q-selector">
+                <button class="qv-minus qv-q-btn"></button>
+                <input type="number" class="qv-q" name="quantity"  min=1 inputmode="numeric" pattern="[0-9]*" value=1>
+                <button class="qv-plus qv-q-btn"></button>
+              </div>
+            </div>
+            <div class="qv-form-control">
+              <div class="pro-attr-block">
+                <h6 class="pro-attr">
+                  Sub Total::
+                </h6>
+                <span class="qv-subtotal"></span>
+              </div>
+            </div>
+            <div class="qv-form-control">
+              <input type="button" name="add" value="ADD TO CART" class="btn btn--purchase  qv-pro-a2c" >
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
-    
-    <script>
+  </div>
+</div>
+
+<script>
+
+  $(document).ready(function(){
+    $('.product-media-slider-single').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.product-media-slider-multi',
+      prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+      nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+
+
+    });
+    $('.product-media-slider-multi').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      arrows: true,
+      asNavFor: '.product-media-slider-single',
+      prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+      nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
+      focusOnSelect: true
+    });
+
+
+
+
+//     $(".qv-pro-variant-inner label").first().trigger("click");
+    $(".qv-pro-variant-inner label").click(function(){
       
-      $(document).ready(function(){
-        $('.product-media-slider-single').slick({
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: true,
-          fade: true,
-          asNavFor: '.product-media-slider-multi',
-          prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
-          nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
-    
-    
-        });
-        $('.product-media-slider-multi').slick({
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          arrows: true,
-          asNavFor: '.product-media-slider-single',
-          prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
-          nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
-    
-    
-        });
+
+      $(".qv-pro-variant-inner label").removeClass("active");
+      $(".qv-pro-variant-inner-option2 label").removeClass("selected available");
+      $(this).addClass("active");
+      $(".qv-pro-variant .qv-option1").text($(this).text());
+      var id = $(this).attr("for");
+      color = $("#"+id).attr("value");
+      $("#color").html(color);
+      var pro = $(this).attr("data-handle");
+      console.log(pro + color);
+
+      $.getJSON("/products/" + pro + ".js",function(product){
+        console.log(product);
+        //         	image(product,color);
         
+        var first = 0;
+        $(".qv-pro-variant-inner-option2 label").each(function(){
+         
+          for(var i = 0; i <= product.variants.length - 1;i++)
+          {
+          	if(product.variants[i].option1 == color && product.variants[i].option2 == $(this).attr("data-value"))
+            {
+              $(this).attr("data-id",product.variants[i].id);
+              $(this).attr("data-price",product.variants[i].price);
+              if( product.variants[i].available == true)
+              {
+                $(this).addClass("available");
+                console.log($(this).attr("data-value"));
+                if(first == 0)
+                {
+                  $(this).addClass("selected");
+                  first = 1;
+                  $(".qv-pro-variant-inner-option2 label.selected").trigger("click");
+                  subtotal();
+                }
+              }
+            }
+            
+          }
+         
+        });
+        if(first == 0)
+        {
+          $(".qv-pro-variant-inner-option2 label").first().addClass("selected");
+          $(".qv-pro-variant-inner-option2 label.selected").trigger("click");
+          subtotal();
+           
+          
+        }
+         qv_select();
       });
+     
+     
+    });
+    
+// size label click
+    
+    $(".qv-pro-variant-inner-option2 label").click(function(){
+    	$(".qv-pro-variant-inner-option2 label").removeClass("selected");
+      $(this).addClass("selected");
+      $(".qv-pro-variant-option2 .qv-option2").text($(this).text());
+      qv_select();
+      subtotal();
+    });
+    
+    //quantity selector
+    $(".qv-q-selector .qv-minus").click(function(e){
+    	
+      e.preventDefault();
+      if($(".qv-q-selector .qv-q").val() != 1)
+      {
+        $(".qv-q-selector .qv-q").val(parseInt($(".qv-q-selector .qv-q").val()) - 1);
+      }
+      subtotal();
+    });
+    $(".qv-q-selector .qv-plus").click(function(e){
+    	
+      e.preventDefault();
+      $(".qv-q-selector .qv-q").val(parseInt($(".qv-q-selector .qv-q").val()) + 1);
+      subtotal();
+    });
+    
+    
+// assign id to select box
+    function qv_select(){
+      var var_id = $(".qv-pro-variant-inner-option2 label.selected").attr("data-id");
+//       alert(var_id);
+      $(".qv-select-variant-select").val(var_id);
+    }
+    
+function a1(form_id) {
+
+alert($('#'+form_id).serialize());
+ $.ajax({
+    type: 'POST', 
+    url: '/cart/add.js',
+    dataType: 'json', 
+    data: $('#'+form_id).serialize(),
+  
+    success: addToCartOk1,
+    error: addToCartFail1
+  });
+}
+
+function addToCartOk1(product) { 
+ alert("true");
+} 
+
+function addToCartFail1(obj, status) { 
+  alert("false");
+} 
+
+   $(".qv-pro-a2c").click(function(){
+     	a1($(".qv-product-form").attr("id"));
+     
+    });  
+    
+    function subtotal()
+    {
+      $(".qv-pro-price").text("");
+      var price = $(".qv-pro-variant-inner-option2 label.selected").attr("data-price");
+//       alert(Shopify.formatMoney(price,{{ shop.money_with_currency_format }});
+//       let formattedPrice = Shopify.formatMoney(price, '{{ shop.money_with_currency_format }}');
+// console.log("Formatted Product Price: " + formattedPrice);
+// alert(Shopify.formatMoney(price));
+      $(".qv-pro-price").text(price);
       
-    </script>
+    }
+    subtotal();
+    
+  });
+  
+
+</script>
