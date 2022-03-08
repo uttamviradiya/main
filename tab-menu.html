@@ -333,6 +333,7 @@ $('.variant-list').on('click', '.size-var', function() {
 
 //quick view
 $(".pro-quick-view .quick-btn").click(function(ev){
+  $(".pro-li").off().hover();
   $(".quick-view-main").css("display","flex");
   $("body").css("overflow","hidden");
   $(".pro-link-top .pro-quick-view").addClass("qv-active");

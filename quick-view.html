@@ -33,6 +33,9 @@
   .quick-view-main .quick-view-main-block .qv-pro-variant{margin:20px 0 0}
   .quick-view-main .quick-view-main-block .qv-pro-variant-inner{position:relative;}
   .quick-view-main .quick-view-main-block .pro-attr-block{display:flex;}
+  .quick-view-main .quick-view-main-block .pro-attr-block .icon-eye{width:20px;height:20px;fill:var(--efault3);margin-right:10px;}
+  .quick-view-main .quick-view-main-block .pro-attr-block.subtotal-block{align-items:center;}
+  .quick-view-main .quick-view-main-block .pro-attr-block.subtotal-block .pro-attr{margin:0;}
   .quick-view-main .quick-view-main-block .qv-pro-variant label{display: inline-block;padding: 12px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px 10px;}
   .quick-view-main .quick-view-main-block .qv-pro-variant label:hover .tooltip1{display:block}
   .quick-view-main .quick-view-main-block .qv-pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
@@ -117,6 +120,7 @@
                 <img src="{{ image | img_url:"master" }}">
               </figure>
               {% endfor %}
+              {% comment %}
               {% for variant in product.variants %}
               {% if variant.image != blank %}
               <figure  data-value="{{ variant.option1 }}">
@@ -124,7 +128,7 @@
               </figure>
               {% endif %}
               {% endfor %}
-
+              {% endcomment %}
             </div>
 
           </div>
@@ -245,17 +249,30 @@
               </div>
             </div>
             <div class="qv-form-control">
-              <div class="pro-attr-block">
+              <div class="pro-attr-block subtotal-block">
                 <h6 class="pro-attr">
                   Sub Total:
                 </h6>
                 <span class="qv-subtotal"></span>
+                
               </div>
             </div>
             <div class="qv-form-control">
               <input type="button" name="add" value="ADD TO CART" class="btn btn--purchase  qv-pro-a2c" >
             </div>
           </form>
+          <div class="pro-attr-block">
+              <h6 class="pro-attr">
+                {% render 'icon-eye' %}
+              </h6>
+              <span class="qv-option2">
+                {% assign min = 100 %}
+                {% assign max = 350 %}
+                {% assign diff = max | minus: min %}
+                {% assign random1 = "now" | date: "%N" | modulo: diff | plus: min %}                          
+                {{ random1 }}  customers are viewing this product
+                </span>
+            </div>
         </div>
 
       </div>
@@ -266,6 +283,7 @@
 <script>
 
   $(document).ready(function(){
+    
     $('.product-media-slider-single').slick({
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -343,6 +361,7 @@
           
         }
          qv_select();
+        change_image(product,color);
       });
      
      
@@ -415,19 +434,18 @@ function addToCartFail1(obj, status) {
     {
       $(".qv-pro-price").text("");
       var price = $(".qv-pro-variant-inner-option2 label.selected").attr("data-price");
-//       alert(Shopify.formatMoney(price,{{ shop.money_with_currency_format }});
-//       let formattedPrice = Shopify.formatMoney(price, '{{ shop.money_with_currency_format }}');
-// console.log("Formatted Product Price: " + formattedPrice);
-// alert(Shopify.formatMoney(price));
-      $(".qv-pro-price").text(price);
+
+      $(".qv-pro-price").text(Shopify.formatMoney(price, "{{ shop.money_format }}"));
       
-      var q = $(".qv-q-selector .qv-q").val();
-      $(".qv-subtotal").text(price * q);
+      var q = $(".qv-q-selector .qv-q").val(); 
+      var sub = price * q;
+   		var s = Shopify.formatMoney(sub, "{{ shop.money_format }}");
+      $(".qv-subtotal").text(s);
       
     }
     subtotal();
     
-  });
+ 
   
   function a2c_disabled()
   {
@@ -441,4 +459,41 @@ function addToCartFail1(obj, status) {
     }
   }
 
+    function change_image(product,color)
+    {
+      var hasimage = 0;
+    	for(var i = 0; i < product.variants.length;i++)
+        {
+        	if(product.variants[i].option1 == color )
+            {
+              if(typeof product.variants[i].featured_image !== 'undefined' && product.variants[i].featured_image !== null)
+              {
+                var fi = product.variants[i].featured_image.src.slice(6);
+                console.log("f i = " + fi);
+                $(".quick-view-main-block .product-media-slider-single figure").each(function(){
+
+                  console.log($(this).children().attr("src"));
+                  
+                  if(fi == $(this).children().attr("src"))
+                  {
+                    $(".quick-view-main-block .product-media-slider-multi figure").removeClass("slick-current slick-active");
+                  	$(this).addClass("slick-current slick-active");
+
+                    var slideno = $(this).data('slick-index');
+                    $('.product-media-slider-single').slick('slickGoTo', slideno);
+                    console.log("slide-index="+ $(this).data("slick-index"));
+                    hasimage = 1;
+                  }
+                  
+                });
+              }
+            }
+        }
+      if(hasimage == 0)
+      {
+      	$('.product-media-slider-single').slick('slickGoTo', 0);
+      }
+    }
+ });  
+  
 </script>
