@@ -209,8 +209,182 @@ $(".pro-variant label").first().trigger("click");
 $(".qv-pro-variant-inner label").first().trigger("click");
    
   
+// });
+
+// tab menu
+
+// $(document).ready(function(){
+  
+  $(".tab-menu-list .tab-a").first().addClass("active-a");
+  $(".section-tab-menu .tab").first().addClass("tab-active");
+  $('.tab-menu-list .tab-a').click(function(){  
+
+    $(".section-tab-menu .tab").removeClass('tab-active');
+
+    $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
+
+    $(".tab-menu-list .tab-a").removeClass('active-a');
+
+    $(this).addClass('active-a');
+  });
+
+  function tab_menu_slider(){
+    
+    $(".tab-active .pro-block-slider").slick({
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      arrows:true,
+      prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+      nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
+      responsive: [
+        {
+          breakpoint: 1401,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll:1,
+            infinite: true,
+            arrows:true
+          }
+        },
+        {
+          breakpoint: 1201,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll:1,
+            infinite: true,
+            arrows:true
+          }
+        }
+      ]
+    });
+  }
+  tab_menu_slider();
+
+
+  //add to cart open
+  $(".pro-img-block .pro-a2c1").click(function(){
+
+    $(this).hide();
+    $(this).parent().children(".pro-variant-block").addClass("show");
+  });
+
+  $(".pro-variant-block .close").click(function(){
+    $(this).parents(".pro-variant-block").removeClass("show");
+    $(this).parents("figcaption").children(".pro-a2c").show();
+  });
+  
+  //size
+$('.variant-list').on('click', '.size-var', function() {
+//   $(".variant-list .size-var").click(function(){
+   
+    $(".variant-list .size-var").removeClass("selected");
+    $(this).addClass("selected");
+    
+  var var_id = $(this).attr("data-id");
+    $(".select-variant-select").val(var_id);
+  
+  if($(this).hasClass("disabled"))
+  {
+    $(".product-form .btn--purchase").addClass("a2c-disabled");
+  }
+  else
+  {
+  	$(".product-form .btn--purchase").removeClass("a2c-disabled");
+  }
+  });
+
+
+  $(".select-variant-select ").change(function(){
+    
+    alert($(this).val());
+  });
+// });
+
+
+//quick view
+$(".pro-quick-view .quick-btn").click(function(ev){
+  $(".tab-active .pro-block-slider").slick("unslick");
+//   $(".pro-li").off().hover();
+  $(this).siblings(".quick-view-main").css("display","flex");
+  $("body").css("overflow","hidden");
+  $(this).parents(".pro-quick-view").addClass("qv-active");
+  
+  $(".qv-pro-variant-inner label").first().trigger("click");
+   
+  $('.product-media-slider-single').slick('unslick');
+  $('.product-media-slider-multi').slick('unslick');
+  qv_slider();
   
   
   
+});
   
+  function qv_slider(){
+    $('.product-media-slider-single').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.product-media-slider-multi',
+      prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+      nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+
+
+    });
+    $('.product-media-slider-multi').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      arrows: true,
+      asNavFor: '.product-media-slider-single',
+      prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+      nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
+      focusOnSelect: true,
+      responsive: [
+        {
+          breakpoint: 1201,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true
+          }
+        }
+      ]
+    });
+  }
+
+$(".quick-view-main .qv-btn-close").click(function(e){
+  e.stopPropagation();
+  $(".quick-view-main").css("display","none");
+  $("body").css("overflow","auto");
+  $(".pro-link-top .pro-quick-view").removeClass("qv-active");
+  tab_menu_slider();
+});
+
+  
+
+  //ajax
+
+function a(form_id) {
+
+// alert($('#'+form_id).serialize());
+ $.ajax({
+    type: 'POST', 
+    url: '/cart/add.js',
+    dataType: 'json', 
+    data: $('#'+form_id).serialize(),
+    success: addToCartOk,
+    error: addToCartFail
+  });
+}
+
+function addToCartOk(product) { 
+ alert("true");
+} 
+
+function addToCartFail(obj, status) { 
+  alert("false");
+} 
+
 });

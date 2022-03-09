@@ -1,4 +1,5 @@
 <style>
+  {% comment %}
   /*   .quick-view-main{display:none;} */
   /*   .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1 !important;visibility:visible !important;} */
   .quick-view-main{display:none;position: fixed;top:0;left:0;width:100%;height:100%;z-index:1111;align-items: center;justify-content: center;cursor: auto;}
@@ -45,7 +46,7 @@
 
   /*  size  */
   .quick-view-main .quick-view-main-block .qv-pro-variant-option2{margin:20px 0 0}
-  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label{display: inline-block;padding: 0px 5px;cursor: pointer;position: relative;border-radius: 17px;border: 1px solid white;box-shadow: 0 0 0 1.5px #e9e9e9;margin: 3px 7px;min-width: 34px;height: 34px;text-align: center;line-height: 34px;font-weight: 500;opacity:0.4}
+  .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label{display: inline-block;padding: 0px 5px;cursor: pointer;position: relative;border-radius: 17px;border: 1px solid white;box-shadow: 0 0 0 1.5px #e9e9e9;margin: 5px 7px;min-width: 34px;height: 34px;text-align: center;line-height: 34px;font-weight: 500;opacity:0.4}
   .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label.available{opacity:1;}
   .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 .selected{border-color:var(--default3);}
   .quick-view-main .quick-view-main-block .qv-pro-variant-inner-option2 label:hover .tooltip1{display:block}
@@ -74,11 +75,22 @@
   
   .quick-view-main .quick-view-main-block .qv-select-variant-select{display:none;}
   .quick-view-main .quick-view-main-block .qv-subtotal{margin:0 10px;}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-pro-a2c{width:45%;border:1px solid var(--default3);}
+  .quick-view-main .quick-view-main-block .qv-form-control .qv-pro-a2c:hover{background:var(--default2)}
   
   .quick-view-main .quick-view-main-block .qv-pro-a2c.a2c-qv-disabled{opacity: 0.5;pointer-events: none;}
   
-  .quick-view-main{display:flex;}
+  @media(max-width:991px)
+  {
+    .quick-view-main .quick-view-container{width:85%;}
+    .quick-view-main .quick-view-main-block{padding:50px 20px}
+    .quick-view-main .quick-view-container .product-media-multi .product-media-slider-multi figure{height:75px;}
+    .quick-view-main .quick-view-main-block .pro-title{font-size:20px;}
+  }
+  
+/*   .quick-view-main{display:flex;} */
 
+  {% endcomment %}
 </style>
 
 <div class="quick-view-main">
@@ -90,7 +102,7 @@
     </button>
     <div class="quick-view-main-block">
       <div class="row">
-        <div class="col-5">
+        <div class="col-md-5">
           <div class="product-media-single">
             <div class="product-media-slider-single">
 
@@ -133,7 +145,7 @@
 
           </div>
         </div>
-        <div class="col-7">
+        <div class="col-md-7">
           <a href="{{ product.title }}" class="pro-title">
             {{ product.title }}
           </a>
@@ -149,17 +161,20 @@
             {{ random1 }} Sold in last {{ random2 }} Hours
           </p>
           <table class="product-info-table">
+            {% if product.vendor != blank %}
             <tr>
               <td>Brand:</td>
               <td>{{ product.vendor }}</td>
             </tr>
-            <tr>
+            {% endif %}
+            
+            <tr class="tr-product-sku">
               <td>Product Code:</td>
-              <td class="product-sku">ABC123</td>
+              <td class="product-sku">{{ product.sku }}</td>
             </tr>
             <tr>
               <td>Availability:</td>
-              <td class="product-quantity">12</td>
+              <td class="product-quantity">{{ product.inventory_quantity }}</td>
             </tr>
           </table>
 
@@ -302,13 +317,21 @@
       asNavFor: '.product-media-slider-single',
       prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
       nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
-      focusOnSelect: true
+      focusOnSelect: true,
+      responsive: [
+    {
+      breakpoint: 1201,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        arrows: true
+      }
+    }
+  ]
     });
+    
 
-
-
-
-//     $(".qv-pro-variant-inner label").first().trigger("click");
     $(".qv-pro-variant-inner label").click(function(){
       
 
@@ -476,8 +499,8 @@ function addToCartFail1(obj, status) {
                   
                   if(fi == $(this).children().attr("src"))
                   {
-                    $(".quick-view-main-block .product-media-slider-multi figure").removeClass("slick-current slick-active");
-                  	$(this).addClass("slick-current slick-active");
+//                     $(".quick-view-main-block .product-media-slider-multi figure").removeClass("slick-current slick-active");
+//                   	$(this).addClass("slick-current slick-active");
 
                     var slideno = $(this).data('slick-index');
                     $('.product-media-slider-single').slick('slickGoTo', slideno);
